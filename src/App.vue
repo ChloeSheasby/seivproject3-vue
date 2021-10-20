@@ -1,4 +1,14 @@
 <template>
+  <div>
+    <!--<UserDisplay></UserDisplay>-->
+    <div class="navbar">
+      <router-link to="/advisorList">Advisor List</router-link>|
+      <router-link to="/advisorAdd">Advisor Add</router-link>
+    </div>
+    <router-view />
+  </div>
+</template>
+
   <v-app>
     <v-app-bar
       app
@@ -38,7 +48,14 @@
     </v-app-bar>
 
     <v-main>
-      <router-view/>
+      <div>
+    <!--<UserDisplay></UserDisplay>-->
+    <div class="navbar">
+      <router-link to="/advisorList">Advisor List</router-link>|
+      <router-link to="/advisorAdd">Advisor Add</router-link>
+    </div>
+    <router-view />
+  </div>
     </v-main>
   </v-app>
 </template>

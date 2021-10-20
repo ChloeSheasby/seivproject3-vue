@@ -2,9 +2,9 @@ import axios from "axios";
 
 var baseurl = "";
 if (process.env.NODE_ENV === "development") {
-  baseurl = "http://localhost/api/";
+  baseurl = "http://localhost/project3-api/";
 } else {
-  baseurl = "/api/";
+  baseurl = "/project3-api/";
 }
 
 const apiClient = axios.create({
@@ -31,3 +31,5 @@ const apiClient = axios.create({
     return data;
   }
 });
+
+export default apiClient;

@@ -3,25 +3,8 @@
   <div>
     <!--<UserDisplay></UserDisplay>-->
     <div class="navbar">
-      <ul>
-        <li>
-          <router-link :to="{ name: 'List' }" class="routerlinks"
-            >List
-          </router-link>
-        </li>
-        <li>
-          <router-link :to="{ name: 'Search' }" class="routerlinks"
-            >Search
-          </router-link>
-        </li>
-        <li>
-          <router-link :to="{ name: 'Add' }" class="routerlinks"
-            >Add
-          </router-link>
-        </li>
-      </ul>
-      <br />
-      <hr />
+      <router-link to="/advisorList">Advisor List</router-link>|
+      <router-link to="/advisorAdd">Advisor Add</router-link>
     </div>
     <router-view />
   </div>

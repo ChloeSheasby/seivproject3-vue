@@ -4,6 +4,11 @@ import AdvisorList from './views/AdvisorList.vue'
 import AdvisorEdit from './views/AdvisorEdit.vue'
 import AdvisorAdd from './views/AdvisorAdd.vue'
 import AdvisorView from './views/AdvisorView.vue'
+import CourseList from "./views/CourseList.vue";
+import CourseSearch from "./views/CourseSearch.vue";
+import CourseAdd from "./views/CourseAdd.vue";
+import CourseEdit from "./views/CourseEdit.vue";
+import CourseView from "./views/CourseView.vue";
 
 Vue.use(Router)
 
@@ -29,9 +34,37 @@ export default new Router({
       component: AdvisorAdd
     },
     {
-      path: '/advisorView',
+      path: '/advisorView/:id',
       name: 'advisorView',
-      component: AdvisorView
+      component: AdvisorView,
+      props: true
+    },
+    {
+      path: "/courseList/",
+      name: "courseList",
+      component: CourseList
+    },
+    {
+      path: "/courseSearch/",
+      name: "courseSearch",
+      component: CourseSearch
+    },
+    {
+      path: "/courseAdd",
+      name: "courseAdd",
+      component: CourseAdd
+    },
+    {
+      path: "/courseEdit/:id",
+      name: "courseEdit",
+      component: CourseEdit,
+      props: true
+    },
+    {
+      path: '/courseView/:id',
+      name: 'courseView',
+      component: CourseView,
+      props: true
     }
     /*
     {

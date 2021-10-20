@@ -9,7 +9,7 @@
             </td>
             <td width='40%'>
             <router-link :to="{ name: 'Course', params: { id: course.courseID } }"  class='edit-btn'>
-                {{ course.name }}
+                {{ course.courseName }}
                 <div id="myId" ref="myId">{{ message }}</div>
             </router-link>
             </td>
@@ -19,7 +19,7 @@
                 </router-link>
             </td>
             <td width='10%' class='edit-and-delete'>
-                <a  class='delete-btn' href = "#" @click="deleteCourse(course.courseID, course.name)">
+                <a  class='delete-btn' href = "#" @click="deleteCourse(course.courseID, course.courseName)">
                     <span>delete</span>
                 </a>
             </td>

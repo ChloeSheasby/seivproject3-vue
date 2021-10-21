@@ -8,13 +8,13 @@
                 </div>
             </td>
             <td width='40%'>
-            <router-link :to="{ name: 'Course', params: { id: course.courseID } }"  class='edit-btn'>
+            <router-link :to="{ name: 'courseView', params: { id: course.courseID } }"  class='edit-btn'>
                 {{ course.courseName }}
-                <div id="myId" ref="myId">{{ message }}</div>
+                <div id="myId" ref="myId">{{  }}</div>
             </router-link>
             </td>
             <td width='10%' class='edit-and-delete'>
-                <router-link :to="{ name: 'edit', params: { id: course.courseID } }"  class='edit-btn'>
+                <router-link :to="{ name: 'courseEdit', params: { id: course.courseID } }"  class='edit-btn'>
                     <span>edit</span>
                 </router-link>
             </td>

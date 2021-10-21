@@ -41,7 +41,10 @@
       <div>
     <!--<UserDisplay></UserDisplay>-->
     <div class="navbar">
-      <router-link to="/advisorList">Advisor List</router-link>|
+      <router-link to="/courseSearch">Course Search </router-link>|
+      <router-link to="/courseList">Course List </router-link>|
+      <router-link to="/courseAdd">Course Add </router-link>|
+      <router-link to="/advisorList">Advisor List </router-link>|
       <router-link to="/advisorAdd">Advisor Add</router-link>
     </div>
     <router-view />

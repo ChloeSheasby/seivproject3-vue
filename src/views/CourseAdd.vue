@@ -83,14 +83,14 @@ export default {
     addCourse() {
       CourseServices.addCourse(this.course)
         .then(() => {
-          this.$router.push({ name: "List" });
+          this.$router.push({ name: "courseList" });
         })
         .catch((error) => {
           console.log(error);
         });
     },
     cancel() {
-      this.$router.push({ name: "List" });
+      this.$router.push({ name: "courseList" });
     },
   },
 };

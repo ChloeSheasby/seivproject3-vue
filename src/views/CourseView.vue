@@ -2,7 +2,7 @@
   <div style="">
     <div style="margin-left: 32%; text-align: left">
       <div style='padding-left: 2%;'>
-      <h3>Viewing Course {{ this.course.name }}</h3>
+      <h3>Viewing Course {{ this.course.courseName }}</h3>
       </div>
       <div style='padding-left: 1%;'>
         <button name="back" v-on:click.prevent="cancel()">Back</button>
@@ -11,7 +11,7 @@
         <span> &nbsp; </span>
         <button
           name="delete"
-          v-on:click.prevent="deleteCourse(this.course.courseID, this.course.name)">
+          v-on:click.prevent="deleteCourse(course.courseID, course.courseName)">
           Delete
         </button>
       </div>
@@ -32,7 +32,7 @@
 </style>
 
 <script>
-import CourseServices from "@/services/services.js";
+import CourseServices from "@/services/courseServices.js";
 //import UserDisplay from '@/components/UserDisplay.vue'
 export default {
   props: ["id"],
@@ -58,7 +58,7 @@ export default {
       if (confirmed) {
         CourseServices.deleteCourse(id)
           .then(() => {
-            this.$router.push({ name: "List" });
+            this.$router.push({ name: "courseList" });
           })
           .catch((error) => {
             console.log("There was an error:", error.response);
@@ -69,7 +69,7 @@ export default {
       this.$router.go(-1);
     },
     toEdit() {
-      this.$router.push({ name: "edit", params: { id: this.course.courseID } });
+      this.$router.push({ name: "courseEdit", params: { id: this.course.courseID } });
     },
   },
 };

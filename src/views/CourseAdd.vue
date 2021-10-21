@@ -8,6 +8,14 @@
       <div class="text-input-group">
               <input
                 class="text-input"
+                v-model="course.courseName"
+                type="text"
+                id="courseName"
+                placeholder="Course Name"
+              />
+              <br>
+              <input
+                class="text-input"
                 v-model="course.dept"
                 type="text"
                 id="dept"
@@ -64,7 +72,7 @@
 </style>
 
 <script>
-import CourseServices from "@/services/services.js";
+import CourseServices from "@/services/courseServices.js";
 export default {
   data() {
     return {
@@ -75,14 +83,14 @@ export default {
     addCourse() {
       CourseServices.addCourse(this.course)
         .then(() => {
-          this.$router.push({ name: "List" });
+          this.$router.push({ name: "courseList" });
         })
         .catch((error) => {
           console.log(error);
         });
     },
     cancel() {
-      this.$router.push({ name: "List" });
+      this.$router.push({ name: "courseList" });
     },
   },
 };

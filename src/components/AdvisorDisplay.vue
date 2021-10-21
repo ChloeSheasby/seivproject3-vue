@@ -10,7 +10,7 @@
             <td width='40%'>
             <router-link :to="{ name: 'advisorView', params: { id: advisor.advisorID } }"  class='edit-btn'>
                 {{ advisor.fName }}  {{ advisor.lName }}
-                <div id="myId" ref="myId">{{ message }}</div>
+                <div id="myId" ref="myId">{{  }}</div>
             </router-link>
             </td>
             <td width='10%' class='edit-and-delete'>

@@ -62,7 +62,7 @@
 </style>
 
 <script>
-import CourseServices from "@/services/services.js";
+import CourseServices from "@/services/courseServices.js";
 
 export default {
   props: ["id"],

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+
 import AdvisorList from './views/AdvisorList.vue'
 import AdvisorEdit from './views/AdvisorEdit.vue'
 import AdvisorAdd from './views/AdvisorAdd.vue'

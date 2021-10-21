@@ -11,7 +11,7 @@
         <span> &nbsp; </span>
         <button
           name="delete"
-          v-on:click.prevent="deleteAdvisor(this.advisor.advisorID, this.advisor.fName)">
+          v-on:click.prevent="deleteAdvisor(advisor.advisorID, advisor.fName)">
           Delete
         </button>
       </div>
@@ -53,7 +53,7 @@ export default {
       if (confirmed) {
         AdvisorServices.deleteAdvisor(id)
           .then(() => {
-            this.$router.push({ name: "List" });
+            this.$router.push({ name: "advisorList" });
           })
           .catch((error) => {
             console.log("There was an error:", error.response);
@@ -64,7 +64,7 @@ export default {
       this.$router.go(-1);
     },
     toEdit() {
-      this.$router.push({ name: "edit", params: { id: this.advisor.advisorID } });
+      this.$router.push({ name: "advisorEdit", params: { id: this.advisor.advisorID } });
     },
   },
 };

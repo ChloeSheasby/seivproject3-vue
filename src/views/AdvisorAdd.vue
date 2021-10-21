@@ -74,7 +74,7 @@ export default {
         });
     },
     cancel() {
-      this.$router.push({ name: "List" });
+      this.$router.push({ name: "advisorList" });
     },
   },
 };

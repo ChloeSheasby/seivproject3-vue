@@ -20,7 +20,7 @@
       <div class="text-input">Advisor ID: {{ this.student.advisorID }}</div>
       <div class="text-input">First Name: {{ this.student.fName }}</div>
       <div class="text-input">Last Name: {{ this.student.lName }}</div>
-      <div class="text-input">Last Name: {{ this.student.email }}</div>
+      <div class="text-input">Email: {{ this.student.email }}</div>
       </div>
     </div>
 </template>

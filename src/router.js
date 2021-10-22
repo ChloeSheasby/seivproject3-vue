@@ -15,6 +15,10 @@ import DegreeList from "./views/DegreeList.vue";
 import DegreeEdit from "./views/DegreeEdit.vue";
 import DegreeView from "./views/DegreeView.vue";
 import DegreeAdd from "./views/DegreeAdd.vue";
+import StudentList from "./views/StudentList.vue";
+import StudentEdit from "./views/StudentEdit.vue";
+import StudentView from "./views/StudentView.vue";
+import StudentAdd from "./views/StudentAdd.vue";
 
 Vue.use(Router)
 
@@ -92,6 +96,28 @@ export default new Router({
       path: '/degreeView/:id',
       name: 'degreeView',
       component: DegreeView,
+      props: true
+    },
+    {
+      path: '/studentList',
+      name: 'studentList',
+      component: StudentList
+    },
+    {
+      path: '/studentEdit/:id',
+      name: 'studentEdit',
+      component: StudentEdit,
+      props: true
+    },
+    {
+      path: '/studentAdd',
+      name: 'studentAdd',
+      component: StudentAdd
+    },
+    {
+      path: '/studentView/:id',
+      name: 'studentView',
+      component: StudentView,
       props: true
     }
     /*

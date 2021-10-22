@@ -47,7 +47,9 @@
       <router-link to="/advisorList">Advisor List </router-link>|
       <router-link to="/advisorAdd">Advisor Add</router-link>|
       <router-link to="/degreeList">Degree List</router-link>|
-      <router-link to="/degreeAdd">Degree Add</router-link>
+      <router-link to="/degreeAdd">Degree Add</router-link>|
+      <router-link to="/studentList">Student List</router-link>|
+      <router-link to="/studentAdd">Student Add</router-link>
 
     </div>
     <router-view />

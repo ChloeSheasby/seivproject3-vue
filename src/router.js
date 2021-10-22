@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-
 import AdvisorList from './views/AdvisorList.vue'
 import AdvisorEdit from './views/AdvisorEdit.vue'
 import AdvisorAdd from './views/AdvisorAdd.vue'
@@ -19,6 +18,10 @@ import StudentList from "./views/StudentList.vue";
 import StudentEdit from "./views/StudentEdit.vue";
 import StudentView from "./views/StudentView.vue";
 import StudentAdd from "./views/StudentAdd.vue";
+import SemesterList from "./views/SemesterList.vue";
+import SemesterEdit from "./views/SemesterEdit.vue";
+import SemesterView from "./views/SemesterView.vue";
+import SemesterAdd from "./views/SemesterAdd.vue";
 
 Vue.use(Router)
 
@@ -118,6 +121,28 @@ export default new Router({
       path: '/studentView/:id',
       name: 'studentView',
       component: StudentView,
+      props: true
+    },
+    {
+      path: '/semesterList',
+      name: 'semesterList',
+      component: SemesterList
+    },
+    {
+      path: '/semesterEdit/:id',
+      name: 'semesterEdit',
+      component: SemesterEdit,
+      props: true
+    },
+    {
+      path: '/semesterAdd',
+      name: 'semesterAdd',
+      component: SemesterAdd
+    },
+    {
+      path: '/semesterView/:id',
+      name: 'semesterView',
+      component: SemesterView,
       props: true
     }
     /*

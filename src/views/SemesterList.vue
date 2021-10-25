@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class='name-tag'>Course List</div>    
+    <div class='name-tag'>Semester List</div>    
   <div>
     <table class='center transparent-background' width='100%'>
       <tr>
@@ -14,17 +14,17 @@
           <thead>
             <tr>
               <th width='20%'>
-                  Course Number
+                  Semester Number
               </th>
               <th width='40%'>
-                  Course Name
+                  Semester Name
               </th>
               <th width='10%'></th>
               <th width='10%'></th>
             </tr>
           </thead>
         </table>
-        <CourseDisplay v-for="course in courses" :key="course.courseID" :course="course" @delete-course=deleteCourse />
+        <SemesterDisplay v-for="semester in semesters" :key="semester.semesterID" :semester="semester" @delete-semester=deleteSemester />
   </div>
 </template>
 
@@ -33,40 +33,40 @@
 </style>
 
 <script>
-  import CourseDisplay from '@/components/CourseDisplay.vue'
-  import CourseServices from "@/services/courseServices.js"
+  import SemesterDisplay from '@/components/SemesterDisplay.vue'
+  import SemesterServices from "@/services/semesterServices.js"
   //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      CourseDisplay
+      SemesterDisplay
     },
     data() {
       return {
-        courses: [],
+        semesters: [],
         start: 1,
         length: 100
       }
     },
     created() {
-      this.getCourses(this.start, this.length);
+      this.getSemesters(this.start, this.length);
     },
     methods: {
-      getCourses(start, length) {
-        CourseServices.getCourses(start, length)
+      getSemesters(start, length) {
+        SemesterServices.getSemesters(start, length)
         .then(response => {
-          this.courses = response.data;
+          this.semesters = response.data;
         })
         .catch(error => {
           console.log("There was an error:", error.response)
         });
       },
-      deleteCourse(id, courseName) {
-        let confirmed = confirm(`Are you sure you want to delete ${courseName}`);
+      deleteSemester(id, semesterName) {
+        let confirmed = confirm(`Are you sure you want to delete ${semesterName}`);
         if(confirmed) {
-          CourseServices.deleteCourse(id)
+          SemesterServices.deleteSemester(id)
           .then(() => {
-            this.getCourses(this.start, this.length);
+            this.getSemesters(this.start, this.length);
           })
           .catch(error => {
             console.log("There was an error:", error.response)
@@ -76,13 +76,13 @@
       getPrevious() {
         if(this.start >= this.length) {
           this.start -= this.length;
-          this.getCourses(this.start, this.length);
+          this.getSemesters(this.start, this.length);
         }
       },
       getNext() {
-        if(this.courses.length === this.length) {
+        if(this.semesters.length === this.length) {
           this.start += this.length;
-          this.getCourses(this.start, this.length);
+          this.getSemesters(this.start, this.length);
         }
       }
     }

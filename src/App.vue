@@ -38,7 +38,24 @@
     </v-app-bar>
 
     <v-main>
-      <router-view/>
+      <div>
+    <!--<UserDisplay></UserDisplay>-->
+    <div class="navbar">
+      <router-link to="/courseSearch">Course Search </router-link>|
+      <router-link to="/courseList">Course List </router-link>|
+      <router-link to="/courseAdd">Course Add </router-link>|
+      <router-link to="/advisorList">Advisor List </router-link>|
+      <router-link to="/advisorAdd">Advisor Add </router-link>|
+      <router-link to="/degreeList">Degree List </router-link>|
+      <router-link to="/degreeAdd">Degree Add </router-link>|
+      <router-link to="/studentList">Student List </router-link>|
+      <router-link to="/studentAdd">Student Add </router-link>|
+      <router-link to="/semesterList">Semester List </router-link>|
+      <router-link to="/semesterAdd">Semester Add </router-link>
+
+    </div>
+    <router-view />
+  </div>
     </v-main>
   </v-app>
 </template>

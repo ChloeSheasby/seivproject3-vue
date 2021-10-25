@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class='name-tag'>Course List</div>    
+    <div class='name-tag'>Advisor List</div>    
   <div>
     <table class='center transparent-background' width='100%'>
       <tr>
@@ -13,18 +13,15 @@
         <table width='100%'>
           <thead>
             <tr>
-              <th width='20%'>
-                  Course Number
-              </th>
               <th width='40%'>
-                  Course Name
+                  Advisor Name
               </th>
               <th width='10%'></th>
               <th width='10%'></th>
             </tr>
           </thead>
         </table>
-        <CourseDisplay v-for="course in courses" :key="course.courseID" :course="course" @delete-course=deleteCourse />
+        <AdvisorDisplay v-for="advisor in advisors" :key="advisor.advisorID" :advisor="advisor" @delete-advisor=deleteAdvisor />
   </div>
 </template>
 
@@ -33,40 +30,40 @@
 </style>
 
 <script>
-  import CourseDisplay from '@/components/CourseDisplay.vue'
-  import CourseServices from "@/services/courseServices.js"
+  import AdvisorDisplay from '@/components/AdvisorDisplay.vue'
+  import AdvisorServices from '@/services/advisorServices.js'
   //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      CourseDisplay
+      AdvisorDisplay
     },
     data() {
       return {
-        courses: [],
+        advisors: [],
         start: 1,
         length: 100
       }
     },
     created() {
-      this.getCourses(this.start, this.length);
+      this.getAdvisors(this.start, this.length);
     },
     methods: {
-      getCourses(start, length) {
-        CourseServices.getCourses(start, length)
+      getAdvisors(start, length) {
+        AdvisorServices.getAdvisors(start, length)
         .then(response => {
-          this.courses = response.data;
+          this.advisors = response.data;
         })
         .catch(error => {
           console.log("There was an error:", error.response)
         });
       },
-      deleteCourse(id, courseName) {
-        let confirmed = confirm(`Are you sure you want to delete ${courseName}`);
+      deleteAdvisor(id, fName) {
+        let confirmed = confirm(`Are you sure you want to delete ${fName}`);
         if(confirmed) {
-          CourseServices.deleteCourse(id)
+          AdvisorServices.deleteAdvisor(id)
           .then(() => {
-            this.getCourses(this.start, this.length);
+            this.getAdvisors(this.start, this.length);
           })
           .catch(error => {
             console.log("There was an error:", error.response)
@@ -76,13 +73,13 @@
       getPrevious() {
         if(this.start >= this.length) {
           this.start -= this.length;
-          this.getCourses(this.start, this.length);
+          this.getAdvisors(this.start, this.length);
         }
       },
       getNext() {
         if(this.courses.length === this.length) {
           this.start += this.length;
-          this.getCourses(this.start, this.length);
+          this.getAdvisors(this.start, this.length);
         }
       }
     }

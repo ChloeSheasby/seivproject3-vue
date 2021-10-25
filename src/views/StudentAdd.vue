@@ -1,59 +1,50 @@
 <template>
   <div>
     <!--<UserDisplay></UserDisplay>-->
-    <h3 class='name-tag'>Add Course</h3>
+    <h3 class='name-tag'>Add Student</h3>
 
-    <form @submit.prevent="addCourse">
+    <form @submit.prevent="addStudent">
       
       <div class="text-input-group">
               <input
                 class="text-input"
-                v-model="course.courseName"
+                v-model="student.degreeID"
                 type="text"
-                id="courseName"
-                placeholder="Course Name"
+                id="degreeID"
+                placeholder="Degree ID"
               />
               <br>
               <input
                 class="text-input"
-                v-model="course.dept"
+                v-model="student.advisorID"
                 type="text"
-                id="dept"
-                placeholder="Department Name"
+                id="advisorID"
+                placeholder="Advisor ID"
               />
               <br>
               <input
                 class="text-input"
-                v-model="course.courseNum"
+                v-model="student.fName"
                 type="text"
-                id="courseNum"
-                placeholder="Course Number"
+                id="fName"
+                placeholder="First Name"
               />
               <br>
               <input
                 class="text-input"
-                v-model="course.level"
+                v-model="student.lName"
                 type="text"
-                id="level"
-                placeholder="Level"
+                id="lName"
+                placeholder="Last Name"
               />
               <br>
               <input
                 class="text-input"
-                v-model="course.hours"
+                v-model="student.email"
                 type="text"
-                id="hours"
-                placeholder="Hours"
+                id="email"
+                placeholder="Email"
               />
-              <br>
-              <textarea
-                class="textarea-input"
-                v-model="course.description"
-                type="textarea"
-                rows='4'
-                id="description"
-                placeholder="Description...">
-              </textarea>
       </div>
       
             <div class="text-input-group">
@@ -72,25 +63,25 @@
 </style>
 
 <script>
-import CourseServices from "@/services/courseServices.js";
+import StudentServices from "@/services/studentServices.js";
 export default {
   data() {
     return {
-      course: {},
+      student: {},
     };
   },
   methods: {
-    addCourse() {
-      CourseServices.addCourse(this.course)
+    addStudent() {
+      StudentServices.addStudent(this.student)
         .then(() => {
-          this.$router.push({ name: "courseList" });
+          this.$router.push({ name: "studentList" });
         })
         .catch((error) => {
           console.log(error);
         });
     },
     cancel() {
-      this.$router.push({ name: "courseList" });
+      this.$router.push({ name: "studentList" });
     },
   },
 };

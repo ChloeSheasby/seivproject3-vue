@@ -6,6 +6,15 @@
     <form @submit.prevent="updateCourse">
 
       <div class="text-input-group">
+              <div class='input-label'>Course Name</div>
+              <input
+                class="text-input"
+                v-model="course.courseName"
+                type="text"
+                id="courseName"
+                placeholder="Course Name"
+              />
+              <br>
               <div class='input-label'>Department Name</div>
               <input
                 class="text-input"
@@ -62,7 +71,7 @@
 </style>
 
 <script>
-import CourseServices from "@/services/services.js";
+import CourseServices from "@/services/courseServices.js";
 
 export default {
   props: ["id"],

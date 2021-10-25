@@ -36,7 +36,7 @@
 
 <script>
 import CourseDisplay from "@/components/CourseDisplay.vue";
-import CourseServices from "@/services/services.js";
+import CourseServices from "@/services/courseServices.js";
 //import UserDisplay from '@/components/UserDisplay.vue'
 export default {
   name: "App",

@@ -2,7 +2,7 @@
   <div style="">
     <div style="margin-left: 32%; text-align: left">
       <div style='padding-left: 2%;'>
-      <h3>Viewing Course {{ this.course.courseName }}</h3>
+      <h3>Viewing Degree {{ this.degree.degreeName }} </h3>
       </div>
       <div style='padding-left: 1%;'>
         <button name="back" v-on:click.prevent="cancel()">Back</button>
@@ -11,20 +11,15 @@
         <span> &nbsp; </span>
         <button
           name="delete"
-          v-on:click.prevent="deleteCourse(course.courseID, course.courseName)">
+          v-on:click.prevent="deleteDegree(degree.degreeID, degree.degreeName)">
           Delete
         </button>
       </div>
       <br />
-      <div class="text-input">Department: {{ this.course.dept }}</div>
-      <div class="text-input">Course Number: {{ this.course.courseNum }}</div>
-      <div class="text-input">Course Level: {{ this.course.level }}</div>
-      <div class="text-input">Number of Hours: {{ this.course.hours }}</div>
-      <div class="text-input" width="150%">
-        Description: {{ this.course.description }}
+      <div class="text-input">Department: {{ this.degree.dept }}</div>
+      <div class="text-input">Total Hours: {{ this.degree.totalHours }}</div>
       </div>
     </div>
-  </div>
 </template>
 
 <style>
@@ -32,20 +27,20 @@
 </style>
 
 <script>
-import CourseServices from "@/services/courseServices.js";
+import DegreeServices from "@/services/degreeServices.js";
 //import UserDisplay from '@/components/UserDisplay.vue'
 export default {
   props: ["id"],
 
   data() {
     return {
-      course: {},
+      degree: {},
     };
   },
   created() {
-    CourseServices.getCourse(this.id)
+    DegreeServices.getDegree(this.id)
       .then((response) => {
-        this.course = response.data;
+        this.degree = response.data;
         console.log(response.data);
       })
       .catch((error) => {
@@ -53,12 +48,12 @@ export default {
       });
   },
   methods: {
-    deleteCourse(id, courseName) {
-      let confirmed = confirm(`Are you sure you want to delete ${courseName}`);
+    deleteDegree(id, degreeName) {
+      let confirmed = confirm(`Are you sure you want to delete ${degreeName}`);
       if (confirmed) {
-        CourseServices.deleteCourse(id)
+        DegreeServices.deleteDegree(id)
           .then(() => {
-            this.$router.push({ name: "courseList" });
+            this.$router.push({ name: "degreeList" });
           })
           .catch((error) => {
             console.log("There was an error:", error.response);
@@ -69,7 +64,7 @@ export default {
       this.$router.go(-1);
     },
     toEdit() {
-      this.$router.push({ name: "courseEdit", params: { id: this.course.courseID } });
+      this.$router.push({ name: "degreeEdit", params: { id: this.degree.degreeID } });
     },
   },
 };

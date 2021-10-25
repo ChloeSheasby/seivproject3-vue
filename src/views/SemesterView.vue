@@ -2,7 +2,7 @@
   <div style="">
     <div style="margin-left: 32%; text-align: left">
       <div style='padding-left: 2%;'>
-      <h3>Viewing Course {{ this.course.courseName }}</h3>
+      <h3>Viewing Semester {{ this.semester.semesterName }}</h3>
       </div>
       <div style='padding-left: 1%;'>
         <button name="back" v-on:click.prevent="cancel()">Back</button>
@@ -11,17 +11,14 @@
         <span> &nbsp; </span>
         <button
           name="delete"
-          v-on:click.prevent="deleteCourse(course.courseID, course.courseName)">
+          v-on:click.prevent="deleteSemester(semester.semesterID, semester.semesterName)">
           Delete
         </button>
       </div>
       <br />
-      <div class="text-input">Department: {{ this.course.dept }}</div>
-      <div class="text-input">Course Number: {{ this.course.courseNum }}</div>
-      <div class="text-input">Course Level: {{ this.course.level }}</div>
-      <div class="text-input">Number of Hours: {{ this.course.hours }}</div>
-      <div class="text-input" width="150%">
-        Description: {{ this.course.description }}
+      <div class="text-input">Semester Type: {{ this.semester.semesterType }}</div>
+      <div class="text-input">Start Date: {{ this.semester.startDate }}</div>
+      <div class="text-input">Semester Level: {{ this.semester.endDate }}</div>
       </div>
     </div>
   </div>
@@ -32,20 +29,20 @@
 </style>
 
 <script>
-import CourseServices from "@/services/courseServices.js";
+import SemesterServices from "@/services/semesterServices.js";
 //import UserDisplay from '@/components/UserDisplay.vue'
 export default {
   props: ["id"],
 
   data() {
     return {
-      course: {},
+      semester: {},
     };
   },
   created() {
-    CourseServices.getCourse(this.id)
+    SemesterServices.getSemester(this.id)
       .then((response) => {
-        this.course = response.data;
+        this.semester = response.data;
         console.log(response.data);
       })
       .catch((error) => {
@@ -53,12 +50,12 @@ export default {
       });
   },
   methods: {
-    deleteCourse(id, courseName) {
-      let confirmed = confirm(`Are you sure you want to delete ${courseName}`);
+    deleteSemester(id, semesterName) {
+      let confirmed = confirm(`Are you sure you want to delete ${semesterName}`);
       if (confirmed) {
-        CourseServices.deleteCourse(id)
+        SemesterServices.deleteSemester(id)
           .then(() => {
-            this.$router.push({ name: "courseList" });
+            this.$router.push({ name: "semesterList" });
           })
           .catch((error) => {
             console.log("There was an error:", error.response);
@@ -69,7 +66,7 @@ export default {
       this.$router.go(-1);
     },
     toEdit() {
-      this.$router.push({ name: "courseEdit", params: { id: this.course.courseID } });
+      this.$router.push({ name: "semesterEdit", params: { id: this.semester.semesterID } });
     },
   },
 };

@@ -2,7 +2,7 @@
   <div style="">
     <div style="margin-left: 32%; text-align: left">
       <div style='padding-left: 2%;'>
-      <h3>Viewing Course {{ this.course.courseName }}</h3>
+      <h3>Viewing Student {{ this.student.fName }} {{ this.student.lName }} </h3>
       </div>
       <div style='padding-left: 1%;'>
         <button name="back" v-on:click.prevent="cancel()">Back</button>
@@ -11,20 +11,18 @@
         <span> &nbsp; </span>
         <button
           name="delete"
-          v-on:click.prevent="deleteCourse(course.courseID, course.courseName)">
+          v-on:click.prevent="deleteStudent(student.studentID, student.fName)">
           Delete
         </button>
       </div>
       <br />
-      <div class="text-input">Department: {{ this.course.dept }}</div>
-      <div class="text-input">Course Number: {{ this.course.courseNum }}</div>
-      <div class="text-input">Course Level: {{ this.course.level }}</div>
-      <div class="text-input">Number of Hours: {{ this.course.hours }}</div>
-      <div class="text-input" width="150%">
-        Description: {{ this.course.description }}
+      <div class="text-input">Degree ID: {{ this.student.degreeID }}</div>
+      <div class="text-input">Advisor ID: {{ this.student.advisorID }}</div>
+      <div class="text-input">First Name: {{ this.student.fName }}</div>
+      <div class="text-input">Last Name: {{ this.student.lName }}</div>
+      <div class="text-input">Email: {{ this.student.email }}</div>
       </div>
     </div>
-  </div>
 </template>
 
 <style>
@@ -32,20 +30,20 @@
 </style>
 
 <script>
-import CourseServices from "@/services/courseServices.js";
+import StudentServices from "@/services/studentServices.js";
 //import UserDisplay from '@/components/UserDisplay.vue'
 export default {
   props: ["id"],
 
   data() {
     return {
-      course: {},
+      student: {},
     };
   },
   created() {
-    CourseServices.getCourse(this.id)
+    StudentServices.getStudent(this.id)
       .then((response) => {
-        this.course = response.data;
+        this.student = response.data;
         console.log(response.data);
       })
       .catch((error) => {
@@ -53,12 +51,12 @@ export default {
       });
   },
   methods: {
-    deleteCourse(id, courseName) {
-      let confirmed = confirm(`Are you sure you want to delete ${courseName}`);
+    deleteStudent(id, fName) {
+      let confirmed = confirm(`Are you sure you want to delete ${fName}`);
       if (confirmed) {
-        CourseServices.deleteCourse(id)
+        StudentServices.deleteStudent(id)
           .then(() => {
-            this.$router.push({ name: "courseList" });
+            this.$router.push({ name: "studentList" });
           })
           .catch((error) => {
             console.log("There was an error:", error.response);
@@ -69,7 +67,7 @@ export default {
       this.$router.go(-1);
     },
     toEdit() {
-      this.$router.push({ name: "courseEdit", params: { id: this.course.courseID } });
+      this.$router.push({ name: "studentEdit", params: { id: this.student.studentID } });
     },
   },
 };

@@ -1,59 +1,43 @@
 <template>
   <div>
     <!--<UserDisplay></UserDisplay>-->
-    <h3 class='name-tag'>Add Course</h3>
+    <h3 class='name-tag'>Add Semester</h3>
 
-    <form @submit.prevent="addCourse">
+    <form @submit.prevent="addSemester">
       
       <div class="text-input-group">
               <input
                 class="text-input"
-                v-model="course.courseName"
+                v-model="semester.semesterName"
                 type="text"
-                id="courseName"
-                placeholder="Course Name"
+                id="semesterName"
+                placeholder="Semester Name"
               />
               <br>
               <input
                 class="text-input"
-                v-model="course.dept"
+                v-model="semester.semesterType"
                 type="text"
-                id="dept"
-                placeholder="Department Name"
+                id="semesterType"
+                placeholder="Semester Type"
               />
               <br>
               <input
                 class="text-input"
-                v-model="course.courseNum"
+                v-model="semester.startDate"
                 type="text"
-                id="courseNum"
-                placeholder="Course Number"
+                id="startDate"
+                placeholder="Start Date"
               />
               <br>
               <input
                 class="text-input"
-                v-model="course.level"
+                v-model="semester.endDate"
                 type="text"
-                id="level"
-                placeholder="Level"
+                id="endDate"
+                placeholder="End Date"
               />
               <br>
-              <input
-                class="text-input"
-                v-model="course.hours"
-                type="text"
-                id="hours"
-                placeholder="Hours"
-              />
-              <br>
-              <textarea
-                class="textarea-input"
-                v-model="course.description"
-                type="textarea"
-                rows='4'
-                id="description"
-                placeholder="Description...">
-              </textarea>
       </div>
       
             <div class="text-input-group">
@@ -72,25 +56,25 @@
 </style>
 
 <script>
-import CourseServices from "@/services/courseServices.js";
+import SemesterServices from "@/services/semesterServices.js";
 export default {
   data() {
     return {
-      course: {},
+      semester: {},
     };
   },
   methods: {
-    addCourse() {
-      CourseServices.addCourse(this.course)
+    addSemester() {
+      SemesterServices.addSemester(this.semester)
         .then(() => {
-          this.$router.push({ name: "courseList" });
+          this.$router.push({ name: "semesterList" });
         })
         .catch((error) => {
           console.log(error);
         });
     },
     cancel() {
-      this.$router.push({ name: "courseList" });
+      this.$router.push({ name: "semesterList" });
     },
   },
 };

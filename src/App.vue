@@ -38,15 +38,20 @@
     </v-app-bar>
 
     <v-main>
-      <router-view/>
+      <SocialLogin/>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import SocialLogin from './components/SocialLogin';
 
 export default {
   name: 'App',
+
+  components: {
+    SocialLogin,
+  },
 
   data: () => ({
     //

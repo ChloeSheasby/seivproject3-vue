@@ -9,12 +9,14 @@
 
 <script>
 import router from '@/router/router'
+import AuthServices from '@/services/authServices'
+import Utils from '@/config/utils.js'
 export default {
   name: 'login_signup_social',
   mounted () {
   },
   methods: {
-    loginWithGoogle () {
+    loginWithGoogle() {
       this.$gAuth
         .signIn()
         .then(GoogleUser => {
@@ -25,18 +27,17 @@ export default {
           console.log('getBasicProfile', GoogleUser.getBasicProfile())
           console.log('getAuthResponse', GoogleUser.getAuthResponse())
           var userInfo = {
-            loginType: 'google',
-            google: {
-              auth: GoogleUser.getAuthResponse(),
-              user: {
-                name: GoogleUser.getBasicProfile().getName(),
-                email: GoogleUser.getBasicProfile().getEmail(),
-                profileImage: GoogleUser.getBasicProfile().getImageUrl()
-              }
-            }
+            email: GoogleUser.getBasicProfile().getEmail(),
+            accessToken: GoogleUser.getAuthResponse().id_token
           }
-          this.$store.commit('setLoginUser', userInfo)
-          router.push('/home')
+          AuthServices.loginUser(userInfo)
+          .then(response => {
+            var user = response.data
+            console.log("user: " + user)
+            Utils.setStore("user", user)
+            router.push('/home')
+          })
+          //this.$store.commit('setLoginUser', userInfo)
         })
         .catch(error => {
           console.log('error', error)

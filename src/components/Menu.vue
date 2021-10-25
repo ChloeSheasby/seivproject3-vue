@@ -8,12 +8,12 @@
 
 <script>
 import router from '@/router/router'
-import { removeItem } from '@/config/utils'
+import Utils from '@/config/utils'
 export default {
   name: 'signup_header',
   methods: {
     logout () {
-      removeItem('user')
+      Utils.removeItem('user')
       router.push('/login')
     }
   }

@@ -21,7 +21,6 @@
       <div class="text-input">Semester Level: {{ this.semester.endDate }}</div>
       </div>
     </div>
-  </div>
 </template>
 
 <style>

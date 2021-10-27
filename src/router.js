@@ -22,6 +22,10 @@ import SemesterList from "./views/SemesterList.vue";
 import SemesterEdit from "./views/SemesterEdit.vue";
 import SemesterView from "./views/SemesterView.vue";
 import SemesterAdd from "./views/SemesterAdd.vue";
+import DegreeCourseList from "./views/DegreeCourseList.vue";
+import DegreeCourseAdd from "./views/DegreeCourseAdd.vue";
+import DegreeCourseEdit from "./views/DegreeCourseEdit.vue";
+import DegreeCourseView from "./views/DegreeCourseView.vue";
 
 Vue.use(Router)
 
@@ -143,6 +147,28 @@ export default new Router({
       path: '/semesterView/:id',
       name: 'semesterView',
       component: SemesterView,
+      props: true
+    },
+    {
+      path: '/degreeCourseAdd',
+      name: 'degreeCourseAdd',
+      component: DegreeCourseAdd
+    },
+    {
+      path: '/degreeCourseList',
+      name: 'degreeCourseList',
+      component: DegreeCourseList,
+    },
+    {
+      path: '/degreeCourseEdit/:id',
+      name: 'degreeCourseEdit',
+      component: DegreeCourseEdit,
+      props: true
+    },
+    {
+      path: '/degreeCourseView/:id',
+      name: 'degreeCourseView',
+      component: DegreeCourseView,
       props: true
     }
     /*

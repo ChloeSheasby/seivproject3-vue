@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import router from '@/router/router'
+import router from '@/router'
 import Utils from '@/config/utils'
 export default {
   name: 'signup_header',

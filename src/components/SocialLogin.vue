@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import router from '@/router/router'
+import router from '@/router'
 import AuthServices from '@/services/authServices'
 import Utils from '@/config/utils.js'
 export default {

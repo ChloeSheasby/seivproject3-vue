@@ -15,11 +15,10 @@
           Delete
         </button>
       </div>
-      <br />
+      <br/>
       <div class="text-input">Semester Type: {{ this.semester.semesterType }}</div>
       <div class="text-input">Start Date: {{ this.semester.startDate }}</div>
       <div class="text-input">Semester Level: {{ this.semester.endDate }}</div>
-      </div>
     </div>
   </div>
 </template>

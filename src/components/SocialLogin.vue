@@ -33,11 +33,12 @@ export default {
           AuthServices.loginUser(userInfo)
           .then(response => {
             var user = response.data
-            console.log("user: " + user)
             Utils.setStore("user", user)
+            console.log(this.$store)
+            //this.$store.commit('setLoginUser', userInfo)
             router.push('/home')
           })
-          //this.$store.commit('setLoginUser', userInfo)
+          
         })
         .catch(error => {
           console.log('error', error)

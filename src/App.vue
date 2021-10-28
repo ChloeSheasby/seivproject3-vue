@@ -5,27 +5,8 @@
       color="primary"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
+      
+      <!-- <v-spacer></v-spacer>
 
       <v-btn
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
@@ -34,23 +15,39 @@
       >
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 
+    <div class="navbar">
+        <router-link to="/login">Login </router-link>|
+        <router-link to="home">Home </router-link>|
+        <router-link to="/courseSearch">Course Search </router-link>|
+        <router-link to="/courseList">Course List </router-link>|
+        <router-link to="/courseAdd">Course Add </router-link>|
+        <router-link to="/advisorList">Advisor List </router-link>|
+        <router-link to="/advisorAdd">Advisor Add </router-link>|
+        <router-link to="/degreeList">Degree List </router-link>|
+        <router-link to="/degreeAdd">Degree Add </router-link>|
+        <router-link to="/studentList">Student List </router-link>|
+        <router-link to="/studentAdd">Student Add </router-link>|
+        <router-link to="/semesterList">Semester List </router-link>|
+        <router-link to="/semesterAdd">Semester Add </router-link>|
+        <router-link to="/degreeCourseList">Degree Course List </router-link>|
+        <router-link to="/degreeCourseAdd">Degree Course Add </router-link>
+      </div>
+
+      <router-view />
     <v-main>
-      <SocialLogin/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import SocialLogin from './components/SocialLogin';
 
 export default {
   name: 'App',
 
   components: {
-    SocialLogin,
   },
 
   data: () => ({

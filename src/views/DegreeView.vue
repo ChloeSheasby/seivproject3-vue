@@ -67,7 +67,6 @@ import DegreeServices from "@/services/degreeServices.js";
 import DegreeCourseServices from "@/services/degreeCourseServices.js";
 import CourseDisplayDegree from '@/components/CourseDisplayDegree.vue'
 
-//import UserDisplay from '@/components/UserDisplay.vue'
 export default {
   props: ["id"],
   name: 'App',
@@ -133,7 +132,7 @@ export default {
       this.$router.push({ name: "degreeEdit", params: { id: this.degree.degreeID } });
     },
     toAdd() {
-      this.$router.push({ name: "degreeCourseAdd", params: { id: this.degree.degreeID } });
+      this.$router.push({ name: "degreeCourseAddFromDegree", params: { id: this.degree.degreeID } });
     },
   },
 };

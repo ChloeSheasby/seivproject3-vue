@@ -22,6 +22,7 @@ import SemesterList from "./views/SemesterList.vue";
 import SemesterEdit from "./views/SemesterEdit.vue";
 import SemesterView from "./views/SemesterView.vue";
 import SemesterAdd from "./views/SemesterAdd.vue";
+import StudentCourseListView from "./views/StudentCourseListView.vue";
 
 Vue.use(Router)
 
@@ -143,6 +144,12 @@ export default new Router({
       path: '/semesterView/:id',
       name: 'semesterView',
       component: SemesterView,
+      props: true
+    },
+    {
+      path: '/studentCourseListView/:id',
+      name: 'studentCourseListView',
+      component: StudentCourseListView,
       props: true
     }
     /*

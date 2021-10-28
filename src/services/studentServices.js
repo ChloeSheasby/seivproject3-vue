@@ -9,6 +9,9 @@ export default {
     getStudents(start, length) {
       return apiClient.get(`students?start=${start}&length=${length}`);
     },
+    getStudentsForAdvisor(id) {
+      return apiClient.get(`students/advisor/`+ id);
+    },
     getStudent(id) {
       return apiClient.get("students/" + id);
     },

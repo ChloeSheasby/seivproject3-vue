@@ -14,12 +14,48 @@
           v-on:click.prevent="deleteDegree(degree.degreeID, degree.degreeName)">
           Delete
         </button>
+        <span> &nbsp; </span>
+        <button
+          name="add"
+          v-on:click.prevent="toAdd()">Add Course</button>
       </div>
       <br />
       <div class="text-input">Department: {{ this.degree.dept }}</div>
       <div class="text-input">Total Hours: {{ this.degree.totalHours }}</div>
       </div>
-    </div>
+    
+      <br>
+      <br>
+      <div class='name-tag'>Courses</div>    
+        <div>
+          <table class='center transparent-background' width='100%'>
+            <tr>
+              <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
+              <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
+            </tr>
+          </table>
+        </div>
+      <br>
+          <table width='100%'>
+            <thead>
+              <tr>
+                <th width='20%'>
+                    Course Number
+                </th>
+                <th width='40%'>
+                    Course Name
+                </th>
+                <th width='10%'></th>
+                <th width='10%'></th>
+              </tr>
+            </thead>
+          </table>
+          <CourseDisplayDegree
+            v-for="degree_courses in degree_courses"
+            :key="degree_courses.degreeCourseID"
+            :degree_courses="degree_courses"
+          />  
+          </div>
 </template>
 
 <style>
@@ -28,13 +64,22 @@
 
 <script>
 import DegreeServices from "@/services/degreeServices.js";
+import DegreeCourseServices from "@/services/degreeCourseServices.js";
+import CourseDisplayDegree from '@/components/CourseDisplayDegree.vue'
+
 //import UserDisplay from '@/components/UserDisplay.vue'
 export default {
   props: ["id"],
-
+  name: 'App',
+  components: {
+    CourseDisplayDegree
+  },
   data() {
     return {
+      degree_courses: [],
+      courses: [],
       degree: {},
+      dcTemp: {},
     };
   },
   created() {
@@ -45,6 +90,27 @@ export default {
       })
       .catch((error) => {
         console.log("There was an error:", error.response);
+      });
+    DegreeCourseServices.getAllDegreeCourses()
+      .then(response => {
+        this.degree_courses = response.data;
+        for (let i = 0; i < this.degree_courses.length; i++)
+        {
+          if (this.degree_courses[i].degreeID == this.id){
+            DegreeCourseServices.getDegreeCourse(this.degree_courses[i].degreeCourseID)
+              .then(response => {
+                this.dcTemp = response.data;
+                this.courses.push(this.dcTemp);
+              })
+              .catch(error => {
+                console.log("There was an error:", error.response)
+              });
+          }
+        }
+        this.degree_courses = this.courses;
+      })
+      .catch(error => {
+        console.log("There was an error:", error.response)
       });
   },
   methods: {
@@ -65,6 +131,9 @@ export default {
     },
     toEdit() {
       this.$router.push({ name: "degreeEdit", params: { id: this.degree.degreeID } });
+    },
+    toAdd() {
+      this.$router.push({ name: "degreeCourseAdd", params: { id: this.degree.degreeID } });
     },
   },
 };

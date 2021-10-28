@@ -18,7 +18,7 @@ export default {
     updateDegreeCourse(degreeCourseID, degree_courses) {
       return apiClient.put("degree_courses/" + degreeCourseID, degree_courses);
     },
-    deleteDegreeCourse(degreeId) {
-      return apiClient.delete("degree_courses/" + degreeId);
+    deleteDegreeCourse(degreeCourseID) {
+      return apiClient.delete("degree_courses/" + degreeCourseID);
     }
   };

@@ -94,14 +94,14 @@ export default {
     addDegreeCourse() {
       DegreeCourseServices.addDegreeCourse(this.degree_courses)
         .then(() => {
-          this.$router.push({ name: "degreeCourseList" });
+          this.$router.go(-1);
         })
         .catch((error) => {
           console.log(error);
         });
     },
     cancel() {
-      this.$router.push({ name: "degreeCourseList" });
+      this.$router.go(-1);
     },
   },
 };

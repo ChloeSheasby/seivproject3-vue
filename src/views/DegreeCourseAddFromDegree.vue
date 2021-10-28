@@ -4,15 +4,7 @@
     <h3 class="name-tag">Add Degree Course</h3>
     <br />
     <form @submit.prevent="addDegreeCourse">
-      Major:
-      <input list="degrees" id="degreeGetter" name="degreeGetter" v-model="degree_courses.degreeID"/>
-        <datalist id="degrees">
-          <DegreeDisplayDC
-            v-for="degree in degrees"
-            :key="degree.degreeID"
-            :degree="degree"
-          />
-        </datalist>
+      Major: {{this.degree.degreeName}}
         <br />
         <br />
         <div class="text-input-group">
@@ -51,7 +43,6 @@
 
 <script>
 import CourseDisplayDC from "@/components/CourseDisplayDC.vue";
-import DegreeDisplayDC from "@/components/DegreeDisplayDC.vue";
 import DegreeCourseServices from "@/services/degreeCourseServices.js";
 import CourseServices from "@/services/courseServices.js";
 import DegreeServices from "@/services/degreeServices.js";
@@ -59,33 +50,32 @@ import DegreeServices from "@/services/degreeServices.js";
 export default {
   components: {
     CourseDisplayDC,
-    DegreeDisplayDC,
   },
+  props: ["id"],
   data() {
     return {
       degree_courses: {},
       courses: {},
-      degrees: {},
+      degree: {},
     };
   },
   created() {
     this.getAllCourses();
-    this.getAllDegrees();
+    DegreeServices.getDegree(this.id)
+      .then((response) => {
+        this.degree = response.data;
+        this.degree_courses.degreeID = this.id;
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("There was an error:", error.response);
+      });
   },
   methods: {
     getAllCourses() {
       CourseServices.getAllCourses()
         .then((response) => {
           this.courses = response.data;
-        })
-        .catch((error) => {
-          console.log("There was an error:", error.response);
-        });
-    },
-    getAllDegrees() {
-      DegreeServices.getAllDegrees()
-        .then((response) => {
-          this.degrees = response.data;
         })
         .catch((error) => {
           console.log("There was an error:", error.response);

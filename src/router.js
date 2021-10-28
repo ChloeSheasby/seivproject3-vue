@@ -26,6 +26,7 @@ import DegreeCourseList from "./views/DegreeCourseList.vue";
 import DegreeCourseAdd from "./views/DegreeCourseAdd.vue";
 import DegreeCourseEdit from "./views/DegreeCourseEdit.vue";
 import DegreeCourseView from "./views/DegreeCourseView.vue";
+import DegreeCourseAddFromDegree from "./views/DegreeCourseAddFromDegree.vue";
 
 Vue.use(Router)
 
@@ -153,6 +154,12 @@ export default new Router({
       path: '/degreeCourseAdd',
       name: 'degreeCourseAdd',
       component: DegreeCourseAdd
+    },
+    {
+      path: '/degreeCourseAddFromDegree',
+      name: 'degreeCourseAddFromDegree',
+      component: DegreeCourseAddFromDegree,
+      props: true
     },
     {
       path: '/degreeCourseList',

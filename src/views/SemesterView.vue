@@ -2,7 +2,7 @@
   <div style="">
     <div style="margin-left: 32%; text-align: left">
       <div style='padding-left: 2%;'>
-      <h3>Viewing Semester {{ this.semester.semesterName }}</h3>
+        <h3>Viewing Semester {{ this.semester.semesterName }}</h3>
       </div>
       <div style='padding-left: 1%;'>
         <button name="back" v-on:click.prevent="cancel()">Back</button>
@@ -20,6 +20,7 @@
       <div class="text-input">Start Date: {{ this.semester.startDate }}</div>
       <div class="text-input">Semester Level: {{ this.semester.endDate }}</div>
     </div>
+  </div>
 </template>
 
 <style>

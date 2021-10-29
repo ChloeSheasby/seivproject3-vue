@@ -161,3 +161,7 @@ textarea {
     color: grey;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
+
+input {
+    border:1px solid grey;
+}

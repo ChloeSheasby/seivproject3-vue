@@ -16,6 +16,7 @@ Vue.use(GoogleAuth, gauthOption)
 Vue.use(VueRouter)
 
 Vue.config.productionTip = false
+//Vue.component('v-select', vSelect)
 
 new Vue({
   router,

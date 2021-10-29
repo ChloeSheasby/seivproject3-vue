@@ -34,7 +34,7 @@ export default {
           .then(response => {
             var user = response.data
             Utils.setStore("user", user)
-            console.log(this.$store)
+            console.log(this.$store.state.loginUser)
             //this.$store.commit('setLoginUser', userInfo)
             router.push('/home')
           })

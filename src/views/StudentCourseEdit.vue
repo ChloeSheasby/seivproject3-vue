@@ -16,6 +16,16 @@
             />
           </datalist>
         <br>
+        <div class='input-label'>Semester</div>
+        <input list="semesters" id="semesterGetter" name="semesterGetter" v-model="student_courses.semesterID"/>
+          <datalist id="semesters">
+            <SemesterDisplaySC
+              v-for="semester in semesters"
+              :key="semester.semesterID"
+              :semester="semester"
+            />
+          </datalist>
+          
         <div class='input-label'>Course</div>
         <input list="courses" id="courseGetter" name="courseGetter" v-model="student_courses.courseID"/>
           <datalist id="courses">
@@ -38,20 +48,24 @@
 <script>
 import CourseDisplaySC from "@/components/CourseDisplaySC.vue";
 import StudentDisplaySC from "@/components/StudentDisplaySC.vue";
+import SemesterDisplaySC from "@/components/SemesterDisplaySC.vue";
 import StudentCourseServices from "@/services/studentCourseServices.js";
 import CourseServices from "@/services/courseServices.js";
 import StudentServices from "@/services/studentServices.js";
+import SemesterServices from "@/services/semesterServices.js";
 
 export default {
   components: {
     CourseDisplaySC,
     StudentDisplaySC,
+    SemesterDisplaySC,
   },
   props: ["id"],
   data() {
     return {
       student_courses: {},
       courses: {},
+      semesters: {},
       students: {},
       message: "Make updates to the Student Courses",
     };
@@ -59,6 +73,7 @@ export default {
   created() {
     this.getAllCourses();
     this.getAllStudents();
+    this.getAllSemesters();
     StudentCourseServices.getStudentCourse(this.id)
       .then((response) => {
         this.student_courses = response.data;
@@ -74,6 +89,15 @@ export default {
       CourseServices.getAllCourses()
         .then((response) => {
           this.courses = response.data;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
+    getAllSemesters() {
+      SemesterServices.getAllSemesters()
+        .then((response) => {
+          this.semesters = response.data;
         })
         .catch((error) => {
           console.log("There was an error:", error.response);

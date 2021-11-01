@@ -37,7 +37,7 @@
         <td width="5%" class="edit-and-delete">
           <router-link
             :to="{
-              name: 'studentCourseView',
+              name: 'studentCourseEdit',
               params: { id: student_courses.studentCourseID },
             }"
             class="edit-btn"

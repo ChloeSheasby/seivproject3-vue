@@ -13,20 +13,23 @@
         <table width='100%'>
           <thead>
             <tr>
-              <th width='10%'>
-                  Student Course ID
+              <th width='5%'>
+                  ID
               </th>
-              <th width='10%'>
-                  Student
+              <th width='15%'>
+                  Student Name
               </th>
-              <th width='10%'>
+              <th width='15%'>
+                  Semester
+              </th>
+              <th width='15%'>
                   Course
               </th>
-              <th width='10%'></th>
+              <th width='20%'></th>
             </tr>
           </thead>
         </table>
-        <StudentCourseDisplay v-for="student_courses in student_courses" :key="student_courses.studentCourseID" :student_courses="student_courses" @delete-student_courses=deleteStudentCourse />
+        <StudentCoursesDisplay v-for="student_courses in student_courses" :key="student_courses.studentCourseID" :student_courses="student_courses" @delete-student_courses=deleteStudentCourse />
   </div>
 </template>
 
@@ -35,13 +38,13 @@
 </style>
 
 <script>
-  import StudentCourseDisplay from '@/components/StudentCoursesDisplay.vue'
+  import StudentCoursesDisplay from '@/components/StudentCoursesDisplay.vue'
   import StudentCourseServices from '@/services/studentCourseServices.js'
   //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      StudentCourseDisplay
+      StudentCoursesDisplay
     },
     data() {
       return {

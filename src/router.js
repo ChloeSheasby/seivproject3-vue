@@ -23,15 +23,18 @@ import SemesterList from "./views/SemesterList.vue";
 import SemesterEdit from "./views/SemesterEdit.vue";
 import SemesterView from "./views/SemesterView.vue";
 import SemesterAdd from "./views/SemesterAdd.vue";
-<<<<<<< HEAD
 import StudentCourseListView from "./views/StudentCourseListView.vue";
-=======
 import DegreeCourseList from "./views/DegreeCourseList.vue";
 import DegreeCourseAdd from "./views/DegreeCourseAdd.vue";
 import DegreeCourseEdit from "./views/DegreeCourseEdit.vue";
 import DegreeCourseView from "./views/DegreeCourseView.vue";
 import DegreeCourseAddFromDegree from "./views/DegreeCourseAddFromDegree.vue";
->>>>>>> 56329007e3ae28f353278516edb1c54def21d852
+
+import StudentCourseList from "./views/StudentCourseList.vue";
+import StudentCourseAdd from "./views/StudentCourseAdd.vue";
+import StudentCourseEdit from "./views/StudentCourseEdit.vue";
+import StudentCourseView from "./views/StudentCourseView.vue";
+//import StudentCourseAddFromDegree from "./views/StudentCourseAddFromDegree.vue";
 
 Vue.use(Router)
 
@@ -194,6 +197,38 @@ export default new Router({
       path: '/degreeCourseView/:id',
       name: 'degreeCourseView',
       component: DegreeCourseView,
+      props: true
+    },
+
+    {
+      path: '/studentCourseAdd',
+      name: 'studentCourseAdd',
+      component: StudentCourseAdd,
+      props: true
+    },
+    /*
+    {
+      path: '/studentCourseAddFromDegree',
+      name: 'studentCourseAddFromDegree',
+      component: StudentCourseAddFromDegree,
+      props: true
+    },
+    */
+    {
+      path: '/studentCourseList',
+      name: 'studentCourseList',
+      component: StudentCourseList,
+    },
+    {
+      path: '/studentCourseEdit/:id',
+      name: 'studentCourseEdit',
+      component: StudentCourseEdit,
+      props: true
+    },
+    {
+      path: '/studentCourseView/:id',
+      name: 'studentCourseView',
+      component: StudentCourseView,
       props: true
     }
     /*

@@ -8,6 +8,7 @@ import vuetify from './plugins/vuetify'
 Vue.use(VueRouter)
 
 Vue.config.productionTip = false
+//Vue.component('v-select', vSelect)
 
 new Vue({
   vuetify,

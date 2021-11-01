@@ -3,47 +3,8 @@
     <h3>Viewing Courses for Student {{ this.student.fName }} {{ this.student.lName }} </h3>
     <div class='name-tag'>Student Course List</div>    
   <div>
-    <table class='center transparent-background' width='100%'>
-      <tr>
-        <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
-        <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
-      </tr>
-    </table>
   </div>
-  <div>Taken Courses</div>
-    <br>
-        <table width='100%'>
-          <thead>
-            <tr>
-              <th width='20%'>
-                  Course Number
-              </th>
-              <th width='40%'>
-                  Course Name
-              </th>
-              <th width='10%'></th>
-              <th width='10%'></th>
-            </tr>
-          </thead>
-        </table>
-      <CourseDisplay v-for="course in courses" :key="course.courseID" :course="course"  />
-    <div>Remaining Courses</div>
-    <br>
-        <table width='100%'>
-          <thead>
-            <tr>
-              <th width='20%'>
-                  Course Number
-              </th>
-              <th width='40%'>
-                  Course Name
-              </th>
-              <th width='10%'></th>
-              <th width='10%'></th>
-            </tr>
-          </thead>
-        </table>
-      <CourseDisplay v-for="course in courses" :key="course.courseID" :course="course"  />
+    <StudentSemesterDisplay v-for="semester in semesters" :key="semester.semesterID" :semester="semester" />
   </div>
 </template>
 
@@ -53,19 +14,24 @@
 
 <script>
   import StudentServices from "@/services/studentServices.js";
-  import CourseDisplay from '@/components/CourseDisplay.vue'
+  //import CourseDisplay from '@/components/CourseDisplay.vue';
+  import StudentSemesterDisplay from '@/components/StudentSemesterDisplay.vue';
   import CourseServices from "@/services/studentCourseServices.js"
+  import SemesterServices from "@/services/semesterServices.js"
   //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     props: ["id"],
     name: 'App',
     components: {
-      CourseDisplay
+      StudentSemesterDisplay,
+      //CourseDisplay
     },
     data() {
       return {
+        semesters: [],
         student: {},
-        courses: {}
+        start: 1,
+        length: 100
       }
     },
     created() {
@@ -77,9 +43,20 @@
       .catch((error) => {
         console.log("There was an error:", error.response);
       });
+      this.getSemesters(this.start, this.length);
       this.getCourses(this.start, this.length);
     },
     methods: {
+      getSemesters(start, length) {
+        SemesterServices.getSemesters(start, length)
+        .then(response => {
+          this.semesters = response.data;
+          console.log(this.semesters);
+        })
+        .catch(error => {
+          console.log("There was an error:", error.response)
+        });
+      },
       getCourses(start, length) {
         CourseServices.getCourses(start, length)
         .then(response => {

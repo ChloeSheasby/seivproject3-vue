@@ -49,7 +49,6 @@
 import AdvisorServices from "@/services/advisorServices.js"
 import StudentDisplay from '@/components/StudentDisplay.vue'
 import StudentServices from '@/services/studentServices.js'
-//import UserDisplay from '@/components/UserDisplay.vue'
 export default {
   props: ["id"],
 

@@ -37,6 +37,23 @@
           />
         </datalist>
         <br />
+        <br />
+        Grade:
+        <select v-model="student_courses.grade">
+            <option> A </option>
+            <option> B </option>
+            <option> C </option>
+            <option> D </option>
+            <option> F </option>
+        </select>
+        <br />
+        <br />
+        Status:
+        <select v-model="student_courses.status">
+            <option> Completed </option>
+            <option> In-Progress </option>
+            <option> Upcoming </option>
+        </select>
       </div>
 
       <div class="text-input-group">

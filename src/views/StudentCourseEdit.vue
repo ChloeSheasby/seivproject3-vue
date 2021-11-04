@@ -35,6 +35,22 @@
               :course="course"
             />
           </datalist>
+          
+        <div class='input-label'>Grade</div>
+        <select v-model="student_courses.grade">
+            <option> A </option>
+            <option> B </option>
+            <option> C </option>
+            <option> D </option>
+            <option> F </option>
+        </select>
+          
+        <div class='input-label'>Status</div>
+        <select v-model="student_courses.status">
+            <option> Completed </option>
+            <option> In-Progress </option>
+            <option> Upcoming </option>
+        </select>
       </div>
       <input type="submit" name="submit" value="Save" />
       <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>

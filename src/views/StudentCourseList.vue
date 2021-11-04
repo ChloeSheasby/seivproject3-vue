@@ -25,6 +25,12 @@
               <th width='15%'>
                   Course
               </th>
+              <th width='15%'>
+                  Grade
+              </th>
+              <th width='15%'>
+                  Status
+              </th>
               <th width='20%'></th>
             </tr>
           </thead>

@@ -2,11 +2,10 @@
   <div>
     <table width="100%">
       <tr width="100%">
-        <td width="4%">
-          <router-link :to="{ name: 'studentCourseView', params: { id: student_courses.studentCourseID } }" 
-            class="edit-btn">
+        <td width="4%">          
+          <div class="student-name">
             {{ student_courses.studentCourseID }}
-          </router-link>
+          </div>
         </td>
         <td width="10%">
           <div class="student-name">
@@ -21,6 +20,16 @@
         <td width="10%">
           <div class="course-name">
             {{ this.course.courseName }}
+          </div>
+        </td>
+        <td width="10%">
+          <div class="course-name">
+            {{ student_courses.grade }}
+          </div>
+        </td>
+        <td width="10%">
+          <div class="course-name">
+            {{ student_courses.status }}
           </div>
         </td>
         <td width="5%" class="edit-and-delete">

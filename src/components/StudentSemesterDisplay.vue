@@ -3,10 +3,9 @@
         <table width='100%'>
         <tr width='100%'>
             <td width='40%'>
-            <router-link :to="{ name: 'semesterView', params: { id: semester.semesterID } }"  class='edit-btn'>
-                {{ semester.semesterName }}
-                <div id="myId" ref="myId">{{  }}</div>
-            </router-link>
+            {{ semester.semesterName }}
+            <hr>
+            <br>
             Courses:
             <StudentCourseDisplayBySemester v-for="student_courses in student_courses" :key="student_courses.studentCourseID" :student='this.student' :semester='this.semester.semesterID' :student_courses="student_courses" @delete-student_courses=deleteStudentCourse />
             </td>

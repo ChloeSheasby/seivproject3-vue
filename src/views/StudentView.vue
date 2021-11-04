@@ -1,10 +1,8 @@
 <template>
   <div style="">
+    <h3 class="name-tag">Viewing Student {{ this.student.fName }} {{ this.student.lName }} </h3>
     <div style="margin-left: 32%; text-align: left">
-      <div style='padding-left: 2%;'>
-      <h3>Viewing Student {{ this.student.fName }} {{ this.student.lName }} </h3>
-      </div>
-      <div style='padding-left: 1%;'>
+      <div style='padding-left: 8%;'>
         <button name="back" v-on:click.prevent="cancel()">Back</button>
         <span> &nbsp; </span>
         <button name="edit" v-on:click.prevent="toEdit()">Edit</button>

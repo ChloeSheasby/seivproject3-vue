@@ -123,8 +123,6 @@ table {
     border-radius: 50px;
 }
 .arrows:hover {
-    color: transparent;
-    border-color: transparent;
     cursor: pointer;
 }
 .edit-btn, .delete-btn {
@@ -140,7 +138,7 @@ table {
     font-size: 18px;
 }
 .edit-btn:hover, .delete-btn:hover {
-    color: white;
+    opacity: 50%;
 }
 
 thead >tr {

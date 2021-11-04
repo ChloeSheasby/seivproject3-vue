@@ -19,6 +19,9 @@
       <div class="text-input">First Name: {{ this.student.fName }}</div>
       <div class="text-input">Last Name: {{ this.student.lName }}</div>
       <div class="text-input">Email: {{ this.student.email }}</div>
+      <router-link :to="{ name: 'studentCourseListView', params: { id: student.studentID } }"  class='text-input edit-btn'>
+          View student courses
+      </router-link>
       </div>
     </div>
 </template>

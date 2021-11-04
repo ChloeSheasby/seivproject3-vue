@@ -7,6 +7,8 @@
                 {{ semester.semesterName }}
                 <div id="myId" ref="myId">{{  }}</div>
             </router-link>
+            Courses:
+            <StudentCourseDisplayBySemester v-for="student_courses in student_courses" :key="student_courses.studentCourseID" :student='this.student' :semester='this.semester.semesterID' :student_courses="student_courses" @delete-student_courses=deleteStudentCourse />
             </td>
         </tr>
         </table>
@@ -18,7 +20,12 @@
 
 <script>
 import SemesterServices from "@/services/semesterServices.js";
+import StudentCourseDisplayBySemester from '@/components/StudentCourseDisplayBySemester.vue';
     export default {
+        components: {
+          StudentCourseDisplayBySemester,
+          //CourseDisplay
+        },
         props: {
             semester: Object
         },

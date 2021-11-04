@@ -14,17 +14,14 @@
 
 <script>
   import StudentServices from "@/services/studentServices.js";
-  //import CourseDisplay from '@/components/CourseDisplay.vue';
   import StudentSemesterDisplay from '@/components/StudentSemesterDisplay.vue';
-  import CourseServices from "@/services/studentCourseServices.js"
-  import SemesterServices from "@/services/semesterServices.js"
-  //import UserDisplay from '@/components/UserDisplay.vue'
+  import CourseServices from "@/services/studentCourseServices.js";
+  import SemesterServices from "@/services/semesterServices.js";
   export default {
     props: ["id"],
     name: 'App',
     components: {
       StudentSemesterDisplay,
-      //CourseDisplay
     },
     data() {
       return {

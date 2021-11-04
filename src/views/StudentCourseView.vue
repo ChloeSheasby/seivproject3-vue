@@ -24,6 +24,9 @@
       <br />
       <div class="text-input">Student: {{ this.student.studentName }}</div>
       <div class="text-input">Course: {{ this.course.courseName }}</div>
+      <div class="text-input">Semester: {{ this.semester.semesterName }}</div>
+      <div class="text-input">Grade: {{ student_courses.grade }}</div>
+      <div class="text-input">Status: {{ student_courses.status }}</div>
     </div>
   </div>
 </template>
@@ -36,6 +39,7 @@
 import StudentCourseServices from "@/services/studentCourseServices.js";
 import StudentServices from "@/services/studentServices.js";
 import CourseServices from "@/services/courseServices.js";
+import SemesterServices from "@/services/semesterServices.js";
 
 //import UserDisplay from '@/components/UserDisplay.vue'
 export default {
@@ -46,6 +50,7 @@ export default {
       student_courses: {},
       student: {},
       course: {},
+      semester: {},
     };
   },
   created() {
@@ -55,6 +60,14 @@ export default {
         StudentServices.getStudent(this.student_courses.studentID)
           .then((response) => {
             this.student = response.data;
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.log("There was an error:", error.response);
+          });
+          SemesterServices.getSemester(this.student_courses.semesterID)
+          .then((response) => {
+            this.semester = response.data;
             console.log(response.data);
           })
           .catch((error) => {

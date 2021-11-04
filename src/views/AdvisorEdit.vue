@@ -42,6 +42,15 @@
                 placeholder="Department Name"
               />
               <br>
+              <div class='input-label'>Role</div>
+              <input
+                class="text-input"
+                v-model="advisor.role"
+                type="text"
+                id="role"
+                placeholder="Role"
+              />
+              <br>
       </div>
       <input type="submit" name="submit" value="Save" />
       <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>

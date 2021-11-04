@@ -17,6 +17,7 @@
       </div>
       <br />
       <div class="text-input">Email: {{ this.advisor.email }}</div>
+      <div class="text-input">Role: {{ this.advisor.role }}</div>
       <div class="text-input">Department: {{ this.advisor.dept }}</div>
       </div>
     </div>

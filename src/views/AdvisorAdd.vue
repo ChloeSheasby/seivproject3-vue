@@ -38,6 +38,14 @@
                 placeholder="Department Name"
               />
               <br>
+              <input
+                class="text-input"
+                v-model="advisor.role"
+                type="text"
+                id="role"
+                placeholder="Role"
+              />
+              <br>
       </div>
       
             <div class="text-input-group">

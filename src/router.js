@@ -31,7 +31,6 @@ import DegreeCourseAdd from "./views/DegreeCourseAdd.vue";
 import DegreeCourseEdit from "./views/DegreeCourseEdit.vue";
 import DegreeCourseView from "./views/DegreeCourseView.vue";
 import DegreeCourseAddFromDegree from "./views/DegreeCourseAddFromDegree.vue";
-
 import StudentCourseList from "./views/StudentCourseList.vue";
 import StudentCourseAdd from "./views/StudentCourseAdd.vue";
 import StudentCourseEdit from "./views/StudentCourseEdit.vue";

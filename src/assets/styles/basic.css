@@ -24,9 +24,7 @@ body {
     color: black;
 }
 .routerlinks:hover {
-    background-color: white;
     opacity: 80%;
-    color: black;
 }
 li {
     display: inline;
@@ -54,7 +52,7 @@ button, input[type=submit] {
     border-radius: 50px;
 }
 button:hover, input:hover {
-    opacity: 50%;
+    opacity: 80%;
 }
 
 .text-input {
@@ -123,8 +121,8 @@ table {
     border-radius: 50px;
 }
 .arrows:hover {
-    color: transparent;
-    border-color: transparent;
+    background-color: grey;
+    color: white;
     cursor: pointer;
 }
 .edit-btn, .delete-btn {
@@ -140,7 +138,7 @@ table {
     font-size: 18px;
 }
 .edit-btn:hover, .delete-btn:hover {
-    color: white;
+    opacity: 50%;
 }
 
 thead >tr {
@@ -162,6 +160,9 @@ textarea {
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
-input {
+input, select {
     border:1px solid grey;
+    width: 300px;
+    padding: 1px;
+    border-radius: 5px;
 }

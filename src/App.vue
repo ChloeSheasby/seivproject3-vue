@@ -19,7 +19,8 @@
           <router-link to="/degreeList">Degrees </router-link>|
           <router-link to="/studentList">Students </router-link>|
           <router-link to="/semesterList">Semesters </router-link>|
-          <router-link to="/degreeCourseList">Degree Courses </router-link>
+          <router-link to="/degreeCourseList">Degree Courses </router-link>|
+          <router-link to="/studentCourseList">Student Courses </router-link>
         </div>
         <div v-if="this.$store.state.loginUser.role === 'advisor'">
           <router-link :to="{ name: 'advisorHome', params: { id: this.$store.state.loginUser.advisorID } }">Advisor Home </router-link>

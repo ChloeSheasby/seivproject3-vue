@@ -53,7 +53,9 @@
       <router-link to="/semesterList">Semester List </router-link>|
       <router-link to="/semesterAdd">Semester Add </router-link>|
       <router-link to="/degreeCourseList">Degree Course List </router-link>|
-      <router-link to="/degreeCourseAdd">Degree Course Add </router-link>
+      <router-link to="/degreeCourseAdd">Degree Course Add </router-link>|
+      <router-link to="/studentCourseList">Student Course List </router-link>|
+      <router-link to="/studentCourseAdd">Student Course Add </router-link>
     </div>
     <router-view />
   </div>

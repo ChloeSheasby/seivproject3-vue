@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class='name-tag'>Student Course List</div>    
+    <h3 class='name-tag'>Student Course List</h3>    
   <div>
     <table class='center transparent-background' width='100%'>
       <tr>

@@ -1,26 +1,13 @@
 <template>
   <div style="">
+    <h3 class="name-tag">Welcome, {{ this.advisor.fName }} {{ this.advisor.lName }}</h3>
     <div style="margin-left: 32%; text-align: left">
-      <div style='padding-left: 2%;'>
-      <h3>Welcome, {{ this.advisor.fName }} {{ this.advisor.lName }}</h3>
-      </div>
-      <!-- <div style='padding-left: 1%;'>
-        <button name="back" v-on:click.prevent="cancel()">Back</button>
-        <span> &nbsp; </span>
-        <button name="edit" v-on:click.prevent="toEdit()">Edit</button>
-        <span> &nbsp; </span>
-        <button
-          name="delete"
-          v-on:click.prevent="deleteAdvisor(advisor.advisorID, advisor.fName)">
-          Delete
-        </button>
-      </div> -->
-      <br />
+      <br>
       <div class="text-input">Email: {{ this.advisor.email }}</div>
       <div class="text-input">Department: {{ this.advisor.dept }}</div>
     </div>
     <div>
-  <div class='name-tag'>Student List</div>    
+  <h3 class='name-tag'>Student List</h3>
     <br>
         <table width='100%'>
           <thead>

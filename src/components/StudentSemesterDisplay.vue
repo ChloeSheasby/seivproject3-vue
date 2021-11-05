@@ -1,50 +1,92 @@
 <template>
-    <div>
+  <div>
+    <h3 class='name-tag'>Student Course List</h3>    
+  <div>
+    <table class='center transparent-background' width='100%'>
+      <tr>
+        <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
+        <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
+      </tr>
+    </table>
+  </div>
+    <br>
         <table width='100%'>
-        <tr width='100%'>
-            <td width='40%'>
-            {{ semester.semesterName }}
-            <hr>
-            <br>
-            Courses:
-            <StudentCourseDisplayBySemester v-for="student_courses in student_courses" :key="student_courses.studentCourseID" :student='this.student' :semester='this.semester.semesterID' :student_courses="student_courses" @delete-student_courses=deleteStudentCourse />
-            </td>
-        </tr>
+          <thead>
+            <tr>
+              <th width='10%'>
+                  Student Course ID
+              </th>
+              <th width='10%'>
+                  Student
+              </th>
+              <th width='10%'>
+                  Course
+              </th>
+              <th width='10%'></th>
+            </tr>
+          </thead>
         </table>
-    </div>
+        <StudentCourseDisplay v-for="student_courses in student_courses" :key="student_courses.studentCourseID" :student_courses="student_courses" @delete-student_courses=deleteStudentCourse />
+  </div>
 </template>
+
 <style>
-  @import '../assets/styles/course-list.css';
+  @import '../assets/styles/basic.css';
 </style>
 
 <script>
-import SemesterServices from "@/services/semesterServices.js";
-import StudentCourseDisplayBySemester from '@/components/StudentCourseDisplayBySemester.vue';
-    export default {
-        components: {
-          StudentCourseDisplayBySemester,
-          //CourseDisplay
-        },
-        props: {
-            semester: Object
-        },
-        created() {
-            SemesterServices.getSemester(this.semester.SemesterID)
-                .then((response) => {
-                  this.semester = response.data;
-                  console.log(response.data);
-                })
-                .catch((error) => {
-                  console.log("There was an error:", error.response);
-                });
-            },
-        methods: {
-            deleteSemester(id, semesterName) {
-                this.$emit('delete-semester', id, semesterName);
-            },
-            onWindowLoad(semesterDescription) {
-                this.appendChild(semesterDescription.slice(0, 50));
-            },
+  import StudentCourseDisplay from '@/components/CourseDisplayStudent.vue'
+  import StudentCourseServices from '@/services/studentCourseServices.js'
+  //import UserDisplay from '@/components/UserDisplay.vue'
+  export default {
+    name: 'App',
+    components: {
+      StudentCourseDisplay
+    },
+    data() {
+      return {
+        student_courses: [],
+        start: 1,
+        length: 100,
+      }
+    },
+    created() {
+      this.getStudentCourses(this.start, this.length);
+    },
+    methods: {
+      getStudentCourses(start, length) {
+        StudentCourseServices.getStudentCourses(start, length)
+        .then(response => {
+          this.student_courses = response.data;
+        })
+        .catch(error => {
+          console.log("There was an error:", error.response)
+        });
+      },
+      deleteStudentCourse(id, studentCourseID) {
+        let confirmed = confirm(`Are you sure you want to delete ${studentCourseID}`);
+        if(confirmed) {
+          StudentCourseServices.deleteStudentCourse(id)
+          .then(() => {
+            this.getStudentCourses(this.start, this.length);
+          })
+          .catch(error => {
+            console.log("There was an error:", error.response)
+          });
         }
+      },
+      getPrevious() {
+        if(this.start >= this.length) {
+          this.start -= this.length;
+          this.getStudentCourses(this.start, this.length);
+        }
+      },
+      getNext() {
+        if(this.courses.length === this.length) {
+          this.start += this.length;
+          this.getStudentCourses(this.start, this.length);
+        }
+      }
     }
+  }
 </script>

@@ -19,9 +19,6 @@
       <div class="text-input">First Name: {{ this.student.fName }}</div>
       <div class="text-input">Last Name: {{ this.student.lName }}</div>
       <div class="text-input">Email: {{ this.student.email }}</div>
-      <router-link :to="{ name: 'studentCourseListView', params: { id: student.studentID } }"  class='text-input edit-btn'>
-          View student courses
-      </router-link>
       </div>
     <h3 class='name-tag'>Courses</h3>    
         <div>
@@ -71,6 +68,7 @@ export default {
     return {
       student: {},
       student_courses: [],
+      courses: [],
       scTemp: {},
     };
   },
@@ -94,7 +92,7 @@ export default {
           if (this.student_courses[i].studentID == this.id){
             StudentCourseServices.getStudentCourse(this.student_courses[i].studentCourseID)
               .then(response => {
-                this.dcTemp = response.data;
+                this.scTemp = response.data;
                 this.courses.push(this.scTemp);
               })
               .catch(error => {

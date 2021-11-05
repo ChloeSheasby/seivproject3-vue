@@ -123,6 +123,7 @@ table {
 .arrows:hover {
     background-color: grey;
     color: white;
+
     cursor: pointer;
 }
 .edit-btn, .delete-btn {

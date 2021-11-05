@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--<UserDisplay></UserDisplay>-->
-    <h3 class="name-tag">Editing {{ this.course.name }}</h3>
+    <h3 class="name-tag">Editing {{ this.course.courseName }}</h3>
 
     <form @submit.prevent="updateCourse">
 

@@ -1,23 +1,21 @@
 <template>
   <div style="">
+    <h3 class="name-tag">Viewing Degree {{ this.degree.degreeName }} </h3>
     <div style="margin-left: 32%; text-align: left">
-      <div style='padding-left: 2%;'>
-      <h3>Viewing Degree {{ this.degree.degreeName }} </h3>
-      </div>
       <div style='padding-left: 1%;'>
         <button name="back" v-on:click.prevent="cancel()">Back</button>
-        <span> &nbsp; </span>
+        <span>&nbsp; </span>
         <button name="edit" v-on:click.prevent="toEdit()">Edit</button>
-        <span> &nbsp; </span>
+        <span>&nbsp; </span>
         <button
           name="delete"
           v-on:click.prevent="deleteDegree(degree.degreeID, degree.degreeName)">
           Delete
         </button>
-        <span> &nbsp; </span>
+        <span>&nbsp; </span>
         <button
-          name="add"
-          v-on:click.prevent="toAdd()">Add Course</button>
+          name="add" 
+          v-on:click.prevent="toAdd()">Add Class</button>
       </div>
       <br />
       <div class="text-input">Department: {{ this.degree.dept }}</div>
@@ -25,8 +23,7 @@
       </div>
     
       <br>
-      <br>
-      <div class='name-tag'>Courses</div>    
+      <h3 class='name-tag'>Courses</h3>    
         <div>
           <table class='center transparent-background' width='100%'>
             <tr>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Viewing Courses for Student {{ this.student.fName }} {{ this.student.lName }} </h3>
+    <h3 class="name-tag">Viewing Courses for Student {{ this.student.fName }} {{ this.student.lName }} </h3>
     <div class='name-tag'>Student Course List</div>    
   <div>
   </div>

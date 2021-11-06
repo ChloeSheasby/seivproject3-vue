@@ -20,7 +20,7 @@
         </button>
       </div>
       <br />
-      <div class="text-input">Student: {{ this.student.studentName }}</div>
+      <div class="text-input">Student: {{ this.student.fName }} {{ this.student.lName }}</div>
       <div class="text-input">Course: {{ this.course.courseName }}</div>
       <div class="text-input">Semester: {{ this.semester.semesterName }}</div>
       <div class="text-input">Grade: {{ student_courses.grade }}</div>

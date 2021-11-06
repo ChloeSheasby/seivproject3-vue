@@ -5,6 +5,7 @@
     <table class='center transparent-background' width='100%'>
       <tr>
         <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
+        <td style='text-align: center;'><router-link to="/advisorAdd">Add Advisor</router-link></td>
         <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
       </tr>
     </table>
@@ -13,6 +14,9 @@
         <table width='100%'>
           <thead>
             <tr>
+              <th width='20%'>
+                  ID
+              </th>
               <th width='40%'>
                   Advisor Name
               </th>

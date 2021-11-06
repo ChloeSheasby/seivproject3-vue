@@ -5,6 +5,7 @@
     <table class='center transparent-background' width='100%'>
       <tr>
         <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
+        <td style='text-align: center;'><router-link to="/studentCourseAdd">Add Student Course</router-link></td>
         <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
       </tr>
     </table>
@@ -16,22 +17,22 @@
               <th width='5%'>
                   ID
               </th>
-              <th width='15%'>
+              <th width='10%'>
                   Student Name
               </th>
-              <th width='15%'>
+              <th width='10%'>
                   Semester
               </th>
-              <th width='15%'>
+              <th width='10%'>
                   Course
               </th>
-              <th width='15%'>
+              <th width='5%'>
                   Grade
               </th>
-              <th width='15%'>
+              <th width='5%'>
                   Status
               </th>
-              <th width='20%'></th>
+              <th width='15%'></th>
             </tr>
           </thead>
         </table>

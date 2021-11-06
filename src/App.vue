@@ -5,68 +5,50 @@
       color="primary"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
     </v-app-bar>
 
+    <div v-if="this.$store.state.loginUser !== null" class="navbar">
+        <router-link to="home">Home </router-link>|
+        <router-link to="/login">Login </router-link>|
+        <a href="#" v-if="this.$store.state.loginUser !== null" @click.prevent="logout" class="tablinks">Logout</a>
+        <div v-if="this.$store.state.loginUser.role === 'admin'"> 
+          <router-link :to="{ name: 'advisorHome', params: { id: this.$store.state.loginUser.advisorID } }">Advisor Home </router-link>|
+          <router-link to="/courseSearch">Course Search </router-link>|
+          <router-link to="/courseList">Courses </router-link>|
+          <router-link to="/advisorList">Advisors </router-link>|
+          <router-link to="/degreeList">Degrees </router-link>|
+          <router-link to="/studentList">Students </router-link>|
+          <router-link to="/semesterList">Semesters </router-link>|
+          <router-link to="/degreeCourseList">Degree Courses </router-link>|
+          <router-link to="/studentCourseList">Student Courses </router-link>
+        </div>
+        <div v-if="this.$store.state.loginUser.role === 'advisor'">
+          <router-link :to="{ name: 'advisorHome', params: { id: this.$store.state.loginUser.advisorID } }">Advisor Home </router-link>
+        </div>
+     </div>
+
+      <router-view />
     <v-main>
-      <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <div class="navbar">
-      <router-link to="/courseSearch">Course Search </router-link>|
-      <router-link to="/courseList">Course List </router-link>|
-      <router-link to="/courseAdd">Course Add </router-link>|
-      <router-link to="/advisorList">Advisor List </router-link>|
-      <router-link to="/advisorAdd">Advisor Add </router-link>|
-      <router-link to="/degreeList">Degree List </router-link>|
-      <router-link to="/degreeAdd">Degree Add </router-link>|
-      <router-link to="/studentList">Student List </router-link>|
-      <router-link to="/studentAdd">Student Add </router-link>|
-      <router-link to="/semesterList">Semester List </router-link>|
-      <router-link to="/semesterAdd">Semester Add </router-link>|
-      <router-link to="/degreeCourseList">Degree Course List </router-link>|
-      <router-link to="/degreeCourseAdd">Degree Course Add </router-link>|
-      <router-link to="/studentCourseList">Student Course List </router-link>|
-      <router-link to="/studentCourseAdd">Student Course Add </router-link>
-    </div>
-    <router-view />
-  </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import router from '@/router'
+import Utils from '@/config/utils'
 
 export default {
   name: 'App',
+
+  components: {
+  },
+
+  methods: {
+    logout () {
+      Utils.removeItem('user')
+      router.push('/login')
+    }
+  },
 
   data: () => ({
     //

@@ -2,7 +2,7 @@
   <div>
     <table width="100%">
       <tr width="100%">
-        <td width="10">
+        <td width="10%">
           <router-link :to="{ name: 'degreeCourseView', params: { id: degree_courses.degreeCourseID } }" 
             class="edit-btn">
             {{ degree_courses.degreeCourseID }}

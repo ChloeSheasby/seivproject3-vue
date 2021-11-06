@@ -1,4 +1,4 @@
-# seivproject3-vue-actual-final
+# seivproject3-vue
 
 ## Project setup
 ```

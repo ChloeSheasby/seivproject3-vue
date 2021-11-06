@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Home from './views/Home.vue'
+import Login from './views/Login.vue'
 import AdvisorList from './views/AdvisorList.vue';
 import AdvisorEdit from './views/AdvisorEdit.vue';
 import AdvisorAdd from './views/AdvisorAdd.vue';
@@ -29,7 +31,6 @@ import DegreeCourseAdd from "./views/DegreeCourseAdd.vue";
 import DegreeCourseEdit from "./views/DegreeCourseEdit.vue";
 import DegreeCourseView from "./views/DegreeCourseView.vue";
 import DegreeCourseAddFromDegree from "./views/DegreeCourseAddFromDegree.vue";
-
 import StudentCourseList from "./views/StudentCourseList.vue";
 import StudentCourseAdd from "./views/StudentCourseAdd.vue";
 import StudentCourseEdit from "./views/StudentCourseEdit.vue";
@@ -38,11 +39,22 @@ import StudentCourseView from "./views/StudentCourseView.vue";
 
 Vue.use(Router)
 
-export default new Router({
+const router =  new Router({
   mode: 'history',
+  linkExactActiveClass: 'active',
   base:
     process.env.NODE_ENV === 'development'? "/" : "/project3-api/",
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: Home
+    },
     {
       path: '/advisorList',
       name: 'advisorList',
@@ -234,8 +246,21 @@ export default new Router({
     /*
     {
       path: '*',
-      component: NotFondComponent
+      component: NotFoundComponent
     }
     */
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/login']
+  const authRequired = !publicPages.includes(to.path)
+  const loggedIn = localStorage.getItem('user')
+  if (authRequired && !loggedIn) {
+    return next('/login')
+  }
+  next()
+})
+
+export default router;

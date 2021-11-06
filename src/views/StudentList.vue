@@ -14,6 +14,9 @@
         <table width='100%'>
           <thead>
             <tr>
+              <th width='20%'>
+                  ID
+              </th>
               <th width='40%'>
                   Student Name
               </th>

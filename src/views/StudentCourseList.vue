@@ -17,22 +17,22 @@
               <th width='5%'>
                   ID
               </th>
-              <th width='15%'>
+              <th width='10%'>
                   Student Name
               </th>
-              <th width='15%'>
+              <th width='10%'>
                   Semester
               </th>
-              <th width='15%'>
+              <th width='10%'>
                   Course
               </th>
-              <th width='15%'>
+              <th width='5%'>
                   Grade
               </th>
-              <th width='15%'>
+              <th width='5%'>
                   Status
               </th>
-              <th width='20%'></th>
+              <th width='15%'></th>
             </tr>
           </thead>
         </table>

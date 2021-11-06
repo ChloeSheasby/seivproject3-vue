@@ -38,13 +38,13 @@
                 placeholder="Department Name"
               />
               <br>
-              <input
-                class="text-input"
-                v-model="advisor.role"
-                type="text"
-                id="role"
-                placeholder="Role"
-              />
+              <div class="text-input-group">
+                <div class='input-label'>Role</div>
+                <select v-model="advisor.role">
+                  <option> admin </option>
+                  <option> advisor </option>
+                </select>
+              </div>
               <br>
       </div>
       

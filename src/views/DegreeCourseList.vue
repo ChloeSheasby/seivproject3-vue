@@ -15,14 +15,15 @@
           <thead>
             <tr>
               <th width='10%'>
-                  Degree Course ID
+                  ID
               </th>
-              <th width='10%'>
+              <th width='25%'>
                   Degree
               </th>
-              <th width='10%'>
+              <th width='30%'>
                   Course
               </th>
+              <th width='10%'></th>
               <th width='10%'></th>
             </tr>
           </thead>

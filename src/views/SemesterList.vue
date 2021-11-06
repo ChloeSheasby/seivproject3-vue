@@ -15,7 +15,7 @@
           <thead>
             <tr>
               <th width='20%'>
-                  Semester Number
+                  ID
               </th>
               <th width='40%'>
                   Semester Name

@@ -2,7 +2,7 @@
   <div>
     <table width="100%">
       <tr width="100%">
-        <td width="4%">          
+        <td width="5%">          
           <div class="student-name">
             {{ student_courses.studentCourseID }}
           </div>
@@ -22,12 +22,12 @@
             {{ this.course.courseName }}
           </div>
         </td>
-        <td width="10%">
+        <td width="5%">
           <div class="course-name">
             {{ student_courses.grade }}
           </div>
         </td>
-        <td width="10%">
+        <td width="5%">
           <div class="course-name">
             {{ student_courses.status }}
           </div>

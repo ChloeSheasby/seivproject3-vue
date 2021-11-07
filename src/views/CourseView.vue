@@ -18,6 +18,7 @@
       <div class="text-input">Course Number: {{ this.course.courseNum }}</div>
       <div class="text-input">Course Level: {{ this.course.level }}</div>
       <div class="text-input">Number of Hours: {{ this.course.hours }}</div>
+      <div class="text-input">Available Semesters: {{this.semesters}}</div>
       <div class="text-input" width="150%">
         Description: {{ this.course.description }}
       </div>
@@ -38,6 +39,7 @@ export default {
   data() {
     return {
       course: {},
+      semesters: ""
     };
   },
   created() {
@@ -45,6 +47,7 @@ export default {
       .then((response) => {
         this.course = response.data;
         console.log(response.data);
+        this.getSemesters();
       })
       .catch((error) => {
         console.log("There was an error:", error.response);
@@ -61,6 +64,37 @@ export default {
           .catch((error) => {
             console.log("There was an error:", error.response);
           });
+      }
+    },
+    getSemesters() {
+      if(this.course.semesterTypes != null)
+      {
+        var array = this.course.semesterTypes.split(",");
+        var semester = "";
+        array.forEach(element => {
+        if(element == "Sp") {
+          semester += "Spring"
+        }
+        if(element == "Su") {
+          if(semester.length > 0) {
+            semester += ", "
+          }
+          semester += "Summer"
+        }
+        if(element == "F") {
+          if(semester.length > 0) {
+            semester += ", "
+          }
+          semester += "Fall"
+        }
+        if(element == "W") {
+          if(semester.length > 0) {
+            semester += ", "
+          }
+          semester += "Winter"
+        }
+        this.semesters = semester;
+      });
       }
     },
     cancel() {

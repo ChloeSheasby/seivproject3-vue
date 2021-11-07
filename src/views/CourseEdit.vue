@@ -51,6 +51,33 @@
                 placeholder="Hours"
               />
               <br>
+              <div class='input-label'>Semesters</div>
+              <div class="input-label">Spring: &emsp;&emsp; Summer: &emsp;&emsp;&emsp; Fall: &emsp;&emsp;&emsp; Winter:</div>
+              <input
+                class="check-box"
+                v-model="semesterBools.spring"
+                type="checkbox"
+                id="spring"
+              />
+              <input
+                class="check-box"
+                v-model="semesterBools.summer"
+                type="checkbox"
+                id="summer"
+              />
+              <input
+                class="check-box"
+                v-model="semesterBools.fall"
+                type="checkbox"
+                id="fall"
+              />
+              <input
+                class="check-box"
+                v-model="semesterBools.winter"
+                type="checkbox"
+                id="winter"
+              />
+              <br>
               <div class='input-label'>Description</div>
               <textarea
                 class="textarea-input"
@@ -80,6 +107,7 @@ export default {
     return {
       course: {},
       message: "Make updates to the Course",
+      semesterBools: {},
     };
   },
   created() {
@@ -87,6 +115,7 @@ export default {
       .then((response) => {
         this.course = response.data;
         console.log(response.data);
+        this.getSemesterType();
       })
       .catch((error) => {
         console.log("There was an error:", error.response);
@@ -95,6 +124,7 @@ export default {
 
   methods: {
     updateCourse() {
+      this.updateSemesterType()
       CourseServices.updateCourse(this.id, this.course)
         .then(() => {
           this.$router.go(-1);
@@ -102,6 +132,50 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    getSemesterType() {
+      if(this.course.semesterTypes != null) {
+        var array = this.course.semesterTypes.split(",");
+        array.forEach(element => {
+        if(element == "Sp") {
+          this.semesterBools.spring = true;
+        }
+        if(element == "Su") {
+          this.semesterBools.summer = true;
+        }
+        if(element == "F") {
+          this.semesterBools.fall = true;
+        }
+        if(element == "W") {
+          this.semesterBools.winter = true;
+        }
+      });
+      }
+    },
+    updateSemesterType() {
+      var string = "";
+      if(this.semesterBools.spring) {
+        string += "Sp"
+      }
+      if(this.semesterBools.summer) {
+        if (string.length > 0) {
+          string += ","
+        }
+        string += "Su"
+      }
+      if(this.semesterBools.fall) {
+        if (string.length > 0) {
+          string += ","
+        }
+        string += "F"
+      }
+      if(this.semesterBools.winter) {
+        if (string.length > 0) {
+          string += ","
+        }
+        string += "W"
+      }
+      this.course.semesterTypes = string;
     },
     cancel() {
       this.$router.go(-1);

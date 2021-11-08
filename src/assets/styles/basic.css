@@ -66,6 +66,13 @@ button:hover, input:hover {
     width: 500px;
 }
 
+.check-box {
+    height: 25px;
+    width: 100px;
+}
+.check-box-label {
+    display: inline;
+}
 
 .textarea-input {
     margin: 1%;

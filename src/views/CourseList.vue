@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class='name-tag'>Course List</div>    
+    <h3 class='name-tag'>Course List</h3>    
   <div>
     <table class='center transparent-background' width='100%'>
       <tr>
         <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
+        <td style='text-align: center;'><router-link to="/courseAdd">Add Course</router-link></td>
         <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
       </tr>
     </table>
@@ -34,7 +35,7 @@
 
 <script>
   import CourseDisplay from '@/components/CourseDisplay.vue'
-  import CourseServices from '@/services/services.js'
+  import CourseServices from "@/services/courseServices.js"
   //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',

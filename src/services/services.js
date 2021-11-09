@@ -1,10 +1,11 @@
 import axios from "axios";
+import Utils from '@/config/utils.js';
 
 var baseurl = "";
 if (process.env.NODE_ENV === "development") {
-  baseurl = "http://localhost/api/";
+  baseurl = "http://localhost/project3-api/";
 } else {
-  baseurl = "/api/";
+  baseurl = "/project3-api/";
 }
 
 const apiClient = axios.create({
@@ -15,19 +16,25 @@ const apiClient = axios.create({
     "X-Requested-With": "XMLHttpRequest",
     "Access-Control-Allow-Origin": "*",
     crossDomain: true
-  }/*,
+  },
   transformRequest: (data, headers) => {
-    let token = localStorage.getItem("token");
-    let authHeader = "";
-    if (token != null && token != "") authHeader = "Bearer " + token;
-    headers.common["Authorization"] = authHeader;
-    return JSON.stringify(data);
-  }*/,
+      let user = Utils.getStore("user");
+      if (user != null) {
+        let token = user.token;
+        let authHeader = "";
+        if (token != null && token != "") 
+          authHeader = "Bearer " + token;
+        headers.common["Authorization"] = authHeader;
+      }
+    return JSON.stringify(data); 
+  },  
   transformResponse: function(data) {
     data = JSON.parse(data);
     if (!data.success && data.code == "expired-session") {
-      localStorage.deleteItem("token");
+      localStorage.deleteItem("user");
     }
     return data;
   }
 });
+
+export default apiClient;

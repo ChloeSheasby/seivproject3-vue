@@ -35,6 +35,7 @@ import StudentCourseList from "./views/StudentCourseList.vue";
 import StudentCourseAdd from "./views/StudentCourseAdd.vue";
 import StudentCourseEdit from "./views/StudentCourseEdit.vue";
 import StudentCourseView from "./views/StudentCourseView.vue";
+import StudentHome from "./views/StudentHome.vue";
 //import StudentCourseAddFromDegree from "./views/StudentCourseAddFromDegree.vue";
 
 Vue.use(Router)
@@ -241,6 +242,12 @@ const router =  new Router({
       path: '/studentCourseView/:id',
       name: 'studentCourseView',
       component: StudentCourseView,
+      props: true
+    },
+    {
+      path: '/studentHome/:id',
+      name: 'studentHome',
+      component: StudentHome,
       props: true
     }
     /*

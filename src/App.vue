@@ -25,6 +25,9 @@
         <div v-if="this.$store.state.loginUser.role === 'advisor'">
           <router-link :to="{ name: 'advisorHome', params: { id: this.$store.state.loginUser.advisorID } }">Advisor Home </router-link>
         </div>
+        <div v-if="this.$store.state.loginUser.role === 'student'">
+          <router-link :to="{ name: 'studentHome', params: { id: this.$store.state.loginUser.studentID } }">Student Home </router-link>
+        </div>
      </div>
 
       <router-view />

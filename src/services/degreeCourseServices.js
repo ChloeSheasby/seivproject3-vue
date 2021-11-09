@@ -12,13 +12,13 @@ export default {
     getDegreeCourse(id) {
       return apiClient.get("degree_courses/" + id);
     },
-    addDegreeCourse(degree_courses) {
-      return apiClient.post("degree_courses", degree_courses);
+    addDegreeCourse(degree) {
+      return apiClient.post("degree_courses", degree);
     },
-    updateDegreeCourse(degreeCourseID, degree_courses) {
-      return apiClient.put("degree_courses/" + degreeCourseID, degree_courses);
+    updateDegreeCourse(degreeId, degree) {
+      return apiClient.put("degree_courses/" + degreeId, degree);
     },
-    deleteDegreeCourse(degreeCourseID) {
-      return apiClient.delete("degree_courses/" + degreeCourseID);
+    deleteDegreeCourse(degreeId) {
+      return apiClient.delete("degree_courses/" + degreeId);
     }
   };

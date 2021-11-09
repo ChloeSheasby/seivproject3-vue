@@ -24,7 +24,9 @@ body {
     color: black;
 }
 .routerlinks:hover {
+    background-color: white;
     opacity: 80%;
+    color: black;
 }
 li {
     display: inline;
@@ -52,7 +54,7 @@ button, input[type=submit] {
     border-radius: 50px;
 }
 button:hover, input:hover {
-    opacity: 80%;
+    opacity: 50%;
 }
 
 .text-input {
@@ -66,13 +68,6 @@ button:hover, input:hover {
     width: 500px;
 }
 
-.check-box {
-    height: 25px;
-    width: 100px;
-}
-.check-box-label {
-    display: inline;
-}
 
 .textarea-input {
     margin: 1%;
@@ -128,9 +123,8 @@ table {
     border-radius: 50px;
 }
 .arrows:hover {
-    background-color: grey;
-    color: white;
-
+    color: transparent;
+    border-color: transparent;
     cursor: pointer;
 }
 .edit-btn, .delete-btn {
@@ -146,7 +140,7 @@ table {
     font-size: 18px;
 }
 .edit-btn:hover, .delete-btn:hover {
-    opacity: 50%;
+    color: white;
 }
 
 thead >tr {
@@ -166,11 +160,4 @@ textarea {
 .course-num {
     color: grey;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-}
-
-input, select {
-    border:1px solid grey;
-    width: 300px;
-    padding: 1px;
-    border-radius: 5px;
 }

@@ -44,7 +44,7 @@ const router =  new Router({
   mode: 'history',
   linkExactActiveClass: 'active',
   base:
-    process.env.NODE_ENV === 'development'? "/" : "/project3-api/",
+    process.env.NODE_ENV === 'development'? "/" : "/studentCoursePlan/",
   routes: [
     {
       path: '/login',

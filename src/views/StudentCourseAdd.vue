@@ -25,8 +25,8 @@
       <v-text-field
         v-else
         v-model="studentName"
-        id="student_courses.studentID"
-        label="First Name"
+        id="studentID"
+        label="Student Name"
         readonly
       ></v-text-field>
 
@@ -104,9 +104,9 @@ export default {
   data() {
     return {
       student_courses: {},
-      courses: {},
-      students: {},
-      semesters: {},
+      courses: [],
+      students: [],
+      semesters: [],
       student: {},
       grades: ['', 'A', 'B', 'C', 'D', 'F'],
       states: ['Completed', 'In-Progress', 'Upcoming'],
@@ -121,7 +121,8 @@ export default {
   },
   created() {
     this.getAllCourses();
-    this.getAllStudents();
+    if(this.$store.state.loginUser.role !== 'student')
+      this.getAllStudents();
     this.getAllSemesters();
     if(this.$store.state.loginUser.role === 'student')
       this.getStudent();
@@ -131,6 +132,7 @@ export default {
       StudentServices.getStudent(this.$store.state.loginUser.studentID)
         .then((response) => {
           this.student = response.data;
+          this.student_courses.studentID = this.student.studentID
           console.log(response.data);
         })
         .catch((error) => {

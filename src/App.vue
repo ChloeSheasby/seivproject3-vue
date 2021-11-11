@@ -26,7 +26,12 @@
           <router-link :to="{ name: 'advisorHome', params: { id: this.$store.state.loginUser.advisorID } }">Advisor Home </router-link>
         </div>
         <div v-if="this.$store.state.loginUser.role === 'student'">
-          <router-link :to="{ name: 'studentHome', params: { id: this.$store.state.loginUser.studentID } }">Student Home </router-link>
+          <router-link :to="{ name: 'studentHome', params: { id: this.$store.state.loginUser.studentID } }">Student Home </router-link>|
+          <router-link 
+          :to="{
+              name: '/studentCourseAddFromStudent',
+              params: { id: student_courses.studentCourseID },
+            }">Sign up for Classes</router-link>
         </div>
      </div>
 

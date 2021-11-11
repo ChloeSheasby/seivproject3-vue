@@ -99,7 +99,8 @@ export default {
   },
   created() {
     this.getAllDegrees();
-    this.getAllAdvisors();
+    if (this.$store.state.loginUser !== 'student')
+      this.getAllAdvisors();
     StudentServices.getStudent(this.id)
       .then((response) => {
         this.student = response.data;

@@ -1,96 +1,112 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class="name-tag">Editing {{ this.course.courseName }}</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>{{ this.course.courseName }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+    <v-form
+      ref="form" 
+      v-model="valid"
+      lazy validation
+    >
+      <v-text-field
+        v-model="course.courseNum"
+        id="courseNum"
+        label="Course Number"
+        required
+      ></v-text-field>
 
-    <form @submit.prevent="updateCourse">
+      <v-text-field
+        v-model="course.courseName"
+        id="courseName"
+        label="Course Name"
+        required
+      ></v-text-field>
 
-      <div class="text-input-group">
-              <div class='input-label'>Course Name</div>
-              <input
-                class="text-input"
-                v-model="course.courseName"
-                type="text"
-                id="courseName"
-                placeholder="Course Name"
-              />
-              <br>
-              <div class='input-label'>Department Name</div>
-              <input
-                class="text-input"
-                v-model="course.dept"
-                type="text"
-                id="dept"
-                placeholder="Department Name"
-              />
-              <br>
-              <div class='input-label'>Course Number</div>
-              <input
-                class="text-input"
-                v-model="course.courseNum"
-                type="text"
-                id="courseNum"
-                placeholder="Course Number"
-              />
-              <br>
-              <div class='input-label'>Level</div>
-              <input
-                class="text-input"
-                v-model="course.level"
-                type="text"
-                id="level"
-                placeholder="level"
-              />
-              <br>
-              <div class='input-label'>Hours</div>
-              <input
-                class="text-input"
-                v-model="course.hours"
-                type="text"
-                id="hours"
-                placeholder="Hours"
-              />
-              <br>
-              <div class='input-label'>Semesters</div>
-              <div class="input-label">Spring: &emsp;&emsp; Summer: &emsp;&emsp;&emsp; Fall: &emsp;&emsp;&emsp; Winter:</div>
-              <input
-                class="check-box"
-                v-model="semesterBools.spring"
-                type="checkbox"
-                id="spring"
-              />
-              <input
-                class="check-box"
-                v-model="semesterBools.summer"
-                type="checkbox"
-                id="summer"
-              />
-              <input
-                class="check-box"
-                v-model="semesterBools.fall"
-                type="checkbox"
-                id="fall"
-              />
-              <input
-                class="check-box"
-                v-model="semesterBools.winter"
-                type="checkbox"
-                id="winter"
-              />
-              <br>
-              <div class='input-label'>Description</div>
-              <textarea
-                class="textarea-input"
-                v-model="course.description"
-                type="textarea"
-                rows='4'
-                id="description"
-                placeholder="Description...">
-              </textarea>
-      </div>
-      <input type="submit" name="submit" value="Save" />
-      <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
-    </form>
+      <v-text-field
+        v-model="course.dept"
+        id="dept"
+        :counter="4"
+        label="Department"
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.level"
+        id="level"
+        :counter="1"
+        label="Level"
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.hours"
+        id="id"
+        :counter="1"
+        label="Hours"
+        required
+      ></v-text-field>
+      <v-simple-table>
+        <tr>
+          <td>
+            <v-checkbox
+              v-model="semesterBools.spring"
+              id="spring"
+              label="Spring"
+            ></v-checkbox>
+          </td>
+
+          <td>
+            <v-checkbox
+              v-model="semesterBools.summer"
+              id="summer"
+              label="Summer"
+            ></v-checkbox>
+          </td>
+
+          <td>
+            <v-checkbox
+              v-model="semesterBools.fall"
+              id="fall"
+              label="Fall"
+            ></v-checkbox>
+          </td>
+
+          <td>
+            <v-checkbox
+              v-model="semesterBools.winter"
+              id="winter"
+              label="Winter"
+            ></v-checkbox>
+          </td>
+        </tr>
+      </v-simple-table>
+
+      <v-textarea
+        v-model="course.description"
+        name="description"
+        label="Description"
+      ></v-textarea>
+
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="updateCourse"
+      >
+        Save
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        @click="cancel"
+      >
+        Cancel
+      </v-btn>
+    </v-form>  
+    </v-container>  
   </div>
 </template>
 <style>

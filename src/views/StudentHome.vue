@@ -1,45 +1,63 @@
-<template>  <div style="">
-    <h3 class="name-tag">Welcome, {{ this.student.fName }} {{ this.student.lName }}</h3>
-    <div style="margin-left: 32%; text-align: left">
-      <br />
-      <div class="text-input">Degree ID: {{ this.student.degreeID }}</div>
-      <div class="text-input">Advisor ID: {{ this.student.advisorID }}</div>
-      <div class="text-input">First Name: {{ this.student.fName }}</div>
-      <div class="text-input">Last Name: {{ this.student.lName }}</div>
-      <div class="text-input">Email: {{ this.student.email }}</div>
-      </div>
+<template>  
+  <div style="">
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Welcome, {{ this.student.fName }} {{ this.student.lName }}</v-toolbar-title>
+      </v-toolbar>
       <br>
-      <br>
-    <h3 class='name-tag'>My Courses</h3>    
-        <div>
-          <table class='center transparent-background' width='100%'>
-            <tr>
-              <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
-              <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
-            </tr>
-          </table>
-        </div>
-      <br>
-          <table width='100%'>
-            <thead>
-              <tr>
-                <th width='20%'>
-                    Course Number
-                </th>
-                <th width='40%'>
-                    Course Name
-                </th>
-                <th width='10%'></th>
-                <th width='10%'></th>
-              </tr>
-            </thead>
-          </table>
-          <CourseDisplayStudent
-            v-for="student_courses in student_courses"
-             :key="student_courses.studentCourseID"
-            :student_courses="student_courses"
-          />  
-          </div>
+      <v-btn
+        color="accent"
+        elevation="2"
+        @click="toEdit"
+      >
+        Edit
+    </v-btn>
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+
+      <br><br>
+        <v-text-field
+          v-model="student.fName"
+          id="fName"
+          :counter="25"
+          label="First Name"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="student.lName"
+          id="lName"
+          :counter="25"
+          label="Last Name"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="student.email"
+          id="email"
+          label="Email"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="this.degree.degreeName"
+          id="degreeID"
+          label="Degree"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="advisorName"
+          id="advisorID"
+          label="Advisor"
+          readonly
+        ></v-text-field>
+    </v-container>
+  </div>
 </template>
 
 <style>
@@ -48,63 +66,87 @@
 
 <script>
 import StudentServices from "@/services/studentServices.js";
-//import UserDisplay from '@/components/UserDisplay.vue'
 import StudentCourseServices from "@/services/studentCourseServices.js";
-import CourseDisplayStudent from '@/components/CourseDisplayStudent.vue'
+import AdvisorServices from "@/services/advisorServices.js";
+import DegreeServices from "@/services/degreeServices.js";
 export default {
   props: ["id"],
 
   data() {
     return {
+      search: '',
       student: {},
       student_courses: [],
       courses: [],
       degree: {},
       advisor: {},
       scTemp: [],
+      headers: [{text: 'ID', value: 'studentCourseID'}, 
+                {text: 'Course', value: 'courseName'},
+                {text: 'Semester', value: 'semesterName'},
+                {text: 'Grade', value: 'grade'},
+                {text: 'Status', value: 'status'}]
     };
   },
+  computed: {
+    advisorName: {
+      get() {
+        return `${this.advisor.fName} ${this.advisor.lName}`;
+      }
+    }
+  },
   components: {
-    CourseDisplayStudent
   },
   created() {
     StudentServices.getStudent(this.id)
       .then((response) => {
         this.student = response.data;
-        console.log(response.data);
+        this.getDegree(this.student.degreeID)
+        this.getAdvisor(this.student.advisorID)
       })
       .catch((error) => {
         console.log("There was an error:", error.response);
       });
-      StudentCourseServices.getAllStudentCourses()
+      StudentCourseServices.getAllForStudent(this.id)
       .then(response => {
         this.student_courses = response.data;
-        for (let i = 0; i < this.student_courses.length; i++)
-        {
-          if (this.student_courses[i].studentID == this.id){
-            StudentCourseServices.getStudentCourse(this.student_courses[i].studentCourseID)
-              .then(response => {
-                this.scTemp = response.data;
-                this.courses.push(this.scTemp);
-              })
-              .catch(error => {
-                console.log("There was an error:", error.response)
-              });
-          }
-        }
-        this.student_courses = this.courses;
       })
       .catch(error => {
         console.log("There was an error:", error.response)
       });
   },
   methods: {
+    getDegree(id) {
+      DegreeServices.getDegree(id)
+        .then((response) => {
+          this.degree = response.data;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
+    getAdvisor(id) {
+      AdvisorServices.getAdvisor(id)
+        .then((response) => {
+          this.advisor = response.data;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
     cancel() {
       this.$router.go(-1);
     },
     toEdit() {
       this.$router.push({ name: "studentEdit", params: { id: this.student.studentID } });
     },
-  },
+    rowClick: function (item, row) {      
+        row.select(true);
+        this.$router.push({ name: 'studentCourseView', params: { id: item.studentCourseID } });
+    },
+    addStudentCourse() {
+        this.$router.push({ name: 'studentCourseAdd'});
+    }
+  }
 };
 </script>

@@ -1,34 +1,44 @@
 <template>
   <div>
-    <h3 class='name-tag'>Degree Course List</h3>    
-  <div>
-    <table class='center transparent-background' width='100%'>
-      <tr>
-        <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
-        <td style='text-align: center;'><router-link to="/degreeCourseAdd">Add Degree Course</router-link></td>
-        <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
-      </tr>
-    </table>
-  </div>
-    <br>
-        <table width='100%'>
-          <thead>
-            <tr>
-              <th width='10%'>
-                  ID
-              </th>
-              <th width='25%'>
-                  Degree
-              </th>
-              <th width='30%'>
-                  Course
-              </th>
-              <th width='10%'></th>
-              <th width='10%'></th>
-            </tr>
-          </thead>
-        </table>
-        <DegreeCourseDisplay v-for="degree_courses in degree_courses" :key="degree_courses.degreeCourseID" :degree_courses="degree_courses" @delete-degree_courses=deleteDegreeCourse />
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Degree Courses</v-toolbar-title>
+      </v-toolbar>
+      <br><br>
+      <v-card>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <v-btn
+          color="accent"
+          elevation="2"
+          @click="addDegreeCourse"
+        >
+          Add
+      </v-btn>
+
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :search="search"
+          :items="degree_courses"
+          :items-per-page="50"
+          @click:row="rowClick"
+        ></v-data-table>
+      </v-card> 
+    </v-container> 
   </div>
 </template>
 
@@ -37,27 +47,27 @@
 </style>
 
 <script>
-  import DegreeCourseDisplay from '@/components/DegreeCoursesDisplay.vue'
   import DegreeCourseServices from '@/services/degreeCourseServices.js'
   //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      DegreeCourseDisplay
     },
     data() {
       return {
+        search: '',
         degree_courses: [],
-        start: 1,
-        length: 100,
+        headers: [{text: 'ID', value: 'degreeCourseID'}, 
+                  {text: 'Degree', value: 'degreeName'},
+                  {text: 'Course', value: 'courseName'}]
       }
     },
     created() {
-      this.getDegreeCourses(this.start, this.length);
+      this.getDegreeCourses();
     },
     methods: {
-      getDegreeCourses(start, length) {
-        DegreeCourseServices.getDegreeCourses(start, length)
+      getDegreeCourses() {
+        DegreeCourseServices.getAllDegreeCourses()
         .then(response => {
           this.degree_courses = response.data;
         })
@@ -88,6 +98,16 @@
           this.start += this.length;
           this.getDegreeCourses(this.start, this.length);
         }
+      },
+      rowClick: function (item, row) {      
+        row.select(true);
+        this.$router.push({ name: 'degreeCourseView', params: { id: item.degreeCourseID } });
+      },
+      addDegreeCourse() {
+        this.$router.push({ name: 'degreeCourseAdd'});
+      },
+      cancel() {
+        this.$router.go(-1);
       }
     }
   }

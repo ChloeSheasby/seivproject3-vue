@@ -1,76 +1,82 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class="name-tag">Add Student Course</h3>
-    <br />
-    <form @submit.prevent="addStudentCourse">
-      Student:
-      <input list="students" id="studentGetter" name="studentGetter" v-model="student_courses.studentID"/>
-        <datalist id="students">
-          <StudentDisplaySC
-            v-for="student in students"
-            :key="student.studentID"
-            :student="student"
-          />
-        </datalist>
-        <br />
-        <br />
-        Semester:   
-      <input list="semesters" id="semesterGetter" name="semesterGetter" v-model="student_courses.semesterID"/>
-        <datalist id="semesters">
-          <SemesterDisplaySC
-            v-for="semester in semesters"
-            :key="semester.semesterID"
-            :semester="semester"
-          />
-        </datalist>
-        <br />
-        <br />
-        <div class="text-input-group">
-      Course:   
-      <input list="courses" id="courseGetter" name="courseGetter" v-model="student_courses.courseID"/>
-        <datalist id="courses">
-          <CourseDisplaySC
-            v-for="course in courses"
-            :key="course.courseID"
-            :course="course"
-          />
-        </datalist>
-        <br />
-        <br />
-        Grade:
-        <select v-model="student_courses.grade">
-            <option> A </option>
-            <option> B </option>
-            <option> C </option>
-            <option> D </option>
-            <option> F </option>
-        </select>
-        <br />
-        <br />
-        Status:
-        <select v-model="student_courses.status">
-            <option> Completed </option>
-            <option> In-Progress </option>
-            <option> Upcoming </option>
-        </select>
-      </div>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Student Course {{ this.student_courses.studentCourseID }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+      <v-form
+      ref="form" 
+      v-model="valid"
+      lazy validation
+    >
 
-      <div class="text-input-group">
-        <table class="center transparent-background" width="100%">
-          <tr>
-            <td style="text-align: right">
-              <button name="cancel" v-on:click.prevent="cancel()">
-                Cancel
-              </button>
-            </td>
-            <td style="text-align: left">
-              <input type="submit" name="submit" value="Save" />
-            </td>
-          </tr>
-        </table>
-      </div>
-    </form>
+      <v-select
+        v-model="student_courses.studentID"
+        :items="students"
+        :item-text="item => item.fName +' '+ item.lName"
+        item-value="studentID"
+        label="Student"
+        required
+      >
+      </v-select>
+
+      <v-select
+        v-model="student_courses.courseID"
+        :items="courses"
+        item-text="courseName"
+        item-value="courseID"
+        label="Course"
+        required
+      >
+      </v-select>
+
+      <v-select
+        v-model="student_courses.semesterID"
+        :items="semesters"
+        item-text="semesterName"
+        item-value="semesterID"
+        label="Semester"
+        required
+      >
+      </v-select>
+
+      <v-select
+        v-model="student_courses.grade"
+        :items="grades"
+        item-text="grade"
+        label="Grade"
+        required
+      >
+      </v-select>
+
+      <v-select
+        v-model="student_courses.status"
+        :items="states"
+        item-text="status"
+        label="Status"
+        required
+      >
+      </v-select>
+
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="addStudentCourse"
+      >
+        Save
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        @click="cancel"
+      >
+        Cancel
+      </v-btn>
+    </v-form>   
+    </v-container>
   </div>
 </template>
 <style>
@@ -78,9 +84,6 @@
 </style>
 
 <script>
-import CourseDisplaySC from "@/components/CourseDisplaySC.vue";
-import StudentDisplaySC from "@/components/StudentDisplaySC.vue";
-import SemesterDisplaySC from "@/components/SemesterDisplaySC.vue";
 import StudentCourseServices from "@/services/studentCourseServices.js";
 import CourseServices from "@/services/courseServices.js";
 import StudentServices from "@/services/studentServices.js";
@@ -88,9 +91,6 @@ import SemestersServices from "@/services/semesterServices.js";
 
 export default {
   components: {
-    CourseDisplaySC,
-    StudentDisplaySC,
-    SemesterDisplaySC,
   },
   data() {
     return {
@@ -98,6 +98,8 @@ export default {
       courses: {},
       students: {},
       semesters: {},
+      grades: ['', 'A', 'B', 'C', 'D', 'F'],
+      states: ['Completed', 'In-Progress', 'Upcoming'],
     };
   },
   created() {

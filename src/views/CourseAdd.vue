@@ -1,97 +1,122 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class='name-tag'>Add Course</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Add Course</v-toolbar-title>
+      </v-toolbar>
+      <br>
+    <v-form
+      ref="form" 
+      v-model="valid"
+      lazy validation
+    >
+      <v-text-field
+        v-model="course.courseNum"
+        id="courseNum"
+        label="Course Number"
+        hint="CMSC-0001"
+        persistent-hint
+        required
+      ></v-text-field>
 
-    <form @submit.prevent="addCourse">
-      
-      <div class="text-input-group">
-              <input
-                class="text-input"
-                v-model="course.courseName"
-                type="text"
-                id="courseName"
-                placeholder="Course Name"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="course.dept"
-                type="text"
-                id="dept"
-                placeholder="Department Name"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="course.courseNum"
-                type="text"
-                id="courseNum"
-                placeholder="Course Number"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="course.level"
-                type="text"
-                id="level"
-                placeholder="Level"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="course.hours"
-                type="text"
-                id="hours"
-                placeholder="Hours"
-              />
-              <br>
-              <div class='input-label'>Semesters</div>
-              <div class="input-label">Spring: &emsp;&emsp; Summer: &emsp;&emsp;&emsp; Fall: &emsp;&emsp;&emsp; Winter:</div>
-              <input
-                class="check-box"
-                v-model="semesterBools.spring"
-                type="checkbox"
-                id="spring"
-              />
-              <input
-                class="check-box"
-                v-model="semesterBools.summer"
-                type="checkbox"
-                id="summer"
-              />
-              <input
-                class="check-box"
-                v-model="semesterBools.fall"
-                type="checkbox"
-                id="fall"
-              />
-              <input
-                class="check-box"
-                v-model="semesterBools.winter"
-                type="checkbox"
-                id="winter"
-              />
-              <br>
-              <textarea
-                class="textarea-input"
-                v-model="course.description"
-                type="textarea"
-                rows='4'
-                id="description"
-                placeholder="Description...">
-              </textarea>
-      </div>
-      
-            <div class="text-input-group">
-              <table class='center transparent-background' width='100%'>
-                <tr>
-                  <td style='text-align: right;'><button name="cancel" v-on:click.prevent="cancel()">Cancel</button></td>
-                  <td style='text-align: left;'><input type="submit" name="submit" value="Save"></td>
-                </tr>
-              </table>
-            </div>
-    </form>
+      <v-text-field
+        v-model="course.courseName"
+        id="courseName"
+        label="Course Name"
+        hint="Programming I"
+        persistent-hint
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.dept"
+        id="dept"
+        :counter="4"
+        label="Department"
+        hint="CMSC"
+        persistent-hint
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.level"
+        id="level"
+        :counter="4"
+        hint="1000"
+        persistent-hint
+        label="Level"
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.hours"
+        id="id"
+        :counter="1"
+        hint="3"
+        persistent-hint
+        label="Hours"
+        required
+      ></v-text-field>
+      <v-simple-table>
+        <tr>
+          <td>
+            <v-checkbox
+              v-model="semesterBools.spring"
+              id="spring"
+              label="Spring"
+            ></v-checkbox>
+          </td>
+
+          <td>
+            <v-checkbox
+              v-model="semesterBools.summer"
+              id="summer"
+              label="Summer"
+            ></v-checkbox>
+          </td>
+
+          <td>
+            <v-checkbox
+              v-model="semesterBools.fall"
+              id="fall"
+              label="Fall"
+            ></v-checkbox>
+          </td>
+
+          <td>
+            <v-checkbox
+              v-model="semesterBools.winter"
+              id="winter"
+              label="Winter"
+            ></v-checkbox>
+          </td>
+        </tr>
+      </v-simple-table>
+
+      <v-textarea
+        v-model="course.description"
+        name="description"
+        label="Description"
+      ></v-textarea>
+
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="addCourse"
+      >
+        Save
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        @click="cancel"
+      >
+        Cancel
+      </v-btn>
+    </v-form>    
+    </v-container>
   </div>
 </template>
 <style>

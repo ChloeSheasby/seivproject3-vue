@@ -1,31 +1,45 @@
 <template>
   <div>
-    <h3 class='name-tag'>Course List</h3>    
-  <div>
-    <table class='center transparent-background' width='100%'>
-      <tr>
-        <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
-        <td style='text-align: center;'><router-link to="/courseAdd">Add Course</router-link></td>
-        <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
-      </tr>
-    </table>
-  </div>
-    <br>
-        <table width='100%'>
-          <thead>
-            <tr>
-              <th width='20%'>
-                  Course Number
-              </th>
-              <th width='40%'>
-                  Course Name
-              </th>
-              <th width='10%'></th>
-              <th width='10%'></th>
-            </tr>
-          </thead>
-        </table>
-        <CourseDisplay v-for="course in courses" :key="course.courseID" :course="course" @delete-course=deleteCourse />
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Courses</v-toolbar-title>
+      </v-toolbar>
+      <br><br>
+      <v-card>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <v-btn
+          v-if="this.$store.state.loginUser.role === 'admin'"
+          color="accent"
+          elevation="2"
+          @click="addCourse"
+        >
+          Add
+      </v-btn>
+
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :search="search"
+          :items="courses"
+          :items-per-page="50"
+          @click:row="rowClick"
+        ></v-data-table>
+      </v-card>
+    </v-container>
   </div>
 </template>
 
@@ -34,27 +48,27 @@
 </style>
 
 <script>
-  import CourseDisplay from '@/components/CourseDisplay.vue'
   import CourseServices from "@/services/courseServices.js"
-  //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      CourseDisplay
     },
     data() {
       return {
+        search: '',
         courses: [],
-        start: 1,
-        length: 100
+        headers: [{text: 'ID', value: 'courseID'}, 
+                  {text: 'Course Number', value: 'courseNum'},
+                  {text: 'Name', value: 'courseName'},
+                  {text: "Department", value: 'dept'}]
       }
     },
     created() {
-      this.getCourses(this.start, this.length);
+      this.getCourses();
     },
     methods: {
-      getCourses(start, length) {
-        CourseServices.getCourses(start, length)
+      getCourses() {
+        CourseServices.getAllCourses()
         .then(response => {
           this.courses = response.data;
         })
@@ -85,6 +99,16 @@
           this.start += this.length;
           this.getCourses(this.start, this.length);
         }
+      },
+      rowClick: function (item, row) {      
+        row.select(true);
+        this.$router.push({ name: 'courseView', params: { id: item.courseID } });
+      },
+      addCourse() {
+        this.$router.push({ name: 'courseAdd'});
+      },
+      cancel() {
+        this.$router.go(-1);
       }
     }
   }

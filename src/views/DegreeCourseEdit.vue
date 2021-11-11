@@ -1,34 +1,54 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class="name-tag">Editing {{ this.degree_courses.degreeCourseID }}</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Degree Course {{ this.degree_courses.degreeCourseID }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+      <v-form
+      ref="form" 
+      v-model="valid"
+      lazy validation
+    >
 
-    <form @submit.prevent="updateDegreeCourse">
+      <v-select
+        v-model="degree_courses.degreeID"
+        :items="degrees"
+        item-text="degreeName"
+        item-value="degreeID"
+        label="Degree"
+        required
+      >
+      </v-select>
 
-      <div class="text-input-group">
-        <div class='input-label'>Degree</div>
-        <input list="degrees" id="degreeGetter" name="degreeGetter" v-model="degree_courses.degreeID"/>
-          <datalist id="degrees">
-            <DegreeDisplayDC
-              v-for="degree in degrees"
-              :key="degree.degreeID"
-              :degree="degree"
-            />
-          </datalist>
-        <br>
-        <div class='input-label'>Course</div>
-        <input list="courses" id="courseGetter" name="courseGetter" v-model="degree_courses.courseID"/>
-          <datalist id="courses">
-            <CourseDisplayDC
-              v-for="course in courses"
-              :key="course.courseID"
-              :course="course"
-            />
-          </datalist>
-      </div>
-      <input type="submit" name="submit" value="Save" />
-      <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
-    </form>
+      <v-select
+        v-model="degree_courses.courseID"
+        :items="courses"
+        item-text="courseName"
+        item-value="courseID"
+        label="Course"
+        required
+      >
+      </v-select>
+
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="updateDegreeCourse"
+      >
+        Save
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        @click="cancel"
+      >
+        Cancel
+      </v-btn>
+    </v-form>   
+    </v-container>
   </div>
 </template>
 <style>
@@ -36,16 +56,12 @@
 </style>
 
 <script>
-import CourseDisplayDC from "@/components/CourseDisplayDC.vue";
-import DegreeDisplayDC from "@/components/DegreeDisplayDC.vue";
 import DegreeCourseServices from "@/services/degreeCourseServices.js";
 import CourseServices from "@/services/courseServices.js";
 import DegreeServices from "@/services/degreeServices.js";
 
 export default {
   components: {
-    CourseDisplayDC,
-    DegreeDisplayDC,
   },
   props: ["id"],
   data() {

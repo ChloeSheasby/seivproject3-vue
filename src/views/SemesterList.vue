@@ -1,31 +1,46 @@
 <template>
   <div>
-    <h3 class='name-tag'>Semester List</h3>    
-  <div>
-    <table class='center transparent-background' width='100%'>
-      <tr>
-        <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
-        <td style='text-align: center;'><router-link to="/semesterAdd">Add Semester</router-link></td>
-        <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
-      </tr>
-    </table>
-  </div>
-    <br>
-        <table width='100%'>
-          <thead>
-            <tr>
-              <th width='20%'>
-                  ID
-              </th>
-              <th width='40%'>
-                  Semester Name
-              </th>
-              <th width='10%'></th>
-              <th width='10%'></th>
-            </tr>
-          </thead>
-        </table>
-        <SemesterDisplay v-for="semester in semesters" :key="semester.semesterID" :semester="semester" @delete-semester=deleteSemester />
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Semesters</v-toolbar-title>
+      </v-toolbar>
+      <br><br>
+      <v-card>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <v-btn
+          color="accent"
+          elevation="2"
+          @click="addSemester"
+          v-if="this.$store.state.loginUser.role === 'admin'"
+        >
+          Add
+      </v-btn>
+
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :search="search"
+          :items="semesters"
+          :items-per-page="50"
+          @click:row="rowClick"
+        ></v-data-table>
+      </v-card>  
+    </v-container>
   </div>
 </template>
 
@@ -34,27 +49,25 @@
 </style>
 
 <script>
-  import SemesterDisplay from '@/components/SemesterDisplay.vue'
   import SemesterServices from "@/services/semesterServices.js"
-  //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      SemesterDisplay
     },
     data() {
       return {
+        search: '',
         semesters: [],
-        start: 1,
-        length: 100
+        headers: [{text: 'ID', value: 'semesterID'}, 
+                  {text: 'Semester Name', value: 'semesterName'}]
       }
     },
     created() {
-      this.getSemesters(this.start, this.length);
+      this.getSemesters();
     },
     methods: {
-      getSemesters(start, length) {
-        SemesterServices.getSemesters(start, length)
+      getSemesters() {
+        SemesterServices.getAllSemesters()
         .then(response => {
           this.semesters = response.data;
         })
@@ -85,6 +98,16 @@
           this.start += this.length;
           this.getSemesters(this.start, this.length);
         }
+      },
+      rowClick: function (item, row) {      
+        row.select(true);
+        this.$router.push({ name: 'semesterView', params: { id: item.semesterID } });
+      },
+      addSemester() {
+        this.$router.push({ name: 'semesterAdd'});
+      },
+      cancel() {
+        this.$router.go(-1);
       }
     }
   }

@@ -2,36 +2,29 @@
   <div style="">
     <v-container>
       <v-toolbar>
-        <v-toolbar-title>Welcome, {{ this.advisor.fName }} {{ this.advisor.lName }}</v-toolbar-title>
+        <v-toolbar-title>My Students</v-toolbar-title>
       </v-toolbar>
       <br>
-    <v-btn
-        color="accent"
-        elevation="2"
-        @click="toEdit"
-      >
-        Edit
-    </v-btn>
-    <v-btn
-        class="mr-4"
-        @click="cancel"
-      >
-        Back
-    </v-btn>
 
-    <br><br>
-      <v-text-field
-        v-model="advisor.email"
-        label="Email"
-        readonly
+      <v-card>
+      <v-card-title>
+        <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
       ></v-text-field>
 
-      <v-text-field
-        v-model="advisor.dept"
-        :counter="4"
-        label="Department"
-        readonly
-      ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :search="search"
+        :items="students"
+        :items-per-page="50"
+        @click:row="rowClick"
+      ></v-data-table>
+    </v-card>
     </v-container>
   </div>
 </template>

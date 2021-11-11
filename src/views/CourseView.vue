@@ -1,28 +1,87 @@
 <template>
   <div style="">
-    <h3 class='name-tag'>Viewing Course {{ this.course.courseName }}</h3>
-    <div style="margin-left: 32%; text-align: left">
-      <div style='padding-left: 8%;'>
-        <button name="back" v-on:click.prevent="cancel()">Back</button>
-        <span> &nbsp; </span>
-        <button name="edit" v-on:click.prevent="toEdit()">Edit</button>
-        <span> &nbsp; </span>
-        <button
-          name="delete"
-          v-on:click.prevent="deleteCourse(course.courseID, course.courseName)">
-          Delete
-        </button>
-      </div>
-      <br />
-      <div class="text-input">Department: {{ this.course.dept }}</div>
-      <div class="text-input">Course Number: {{ this.course.courseNum }}</div>
-      <div class="text-input">Course Level: {{ this.course.level }}</div>
-      <div class="text-input">Number of Hours: {{ this.course.hours }}</div>
-      <div class="text-input">Available Semesters: {{this.semesters}}</div>
-      <div class="text-input" width="150%">
-        Description: {{ this.course.description }}
-      </div>
-    </div>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>{{ this.course.courseName }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+      <v-btn
+        v-if="this.$store.state.loginUser.role === 'admin'"
+        color="accent"
+        elevation="2"
+        @click="toEdit"
+      >
+        Edit
+    </v-btn>
+
+    <v-btn
+        v-if="this.$store.state.loginUser.role === 'admin'"
+        color="error"
+        class="mr-4"
+        @click="deleteCourse(course.courseID, course.courseName)"
+      >
+        Delete
+    </v-btn>
+
+    <v-btn
+        class="mr-4"
+        @click="cancel"
+      >
+        Back
+    </v-btn>
+
+    <br><br>
+
+    <v-text-field
+        v-model="course.courseNum"
+        id="courseNum"
+        label="Course Number"
+        readonly
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.courseName"
+        id="courseName"
+        label="Course Name"
+        readonly
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.dept"
+        id="dept"
+        :counter="4"
+        label="Department"
+        readonly
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.level"
+        id="level"
+        :counter="1"
+        label="Level"
+        readonly
+      ></v-text-field>
+
+      <v-text-field
+        v-model="course.hours"
+        :counter="1"
+        label="Hours"
+        readonly
+      ></v-text-field>
+
+      <v-text-field
+        v-model="semesters"
+        label="Semesters"
+        readonly
+      ></v-text-field>
+
+      <v-textarea
+        v-model="course.description"
+        name="description"
+        label="Description"
+        readonly
+      ></v-textarea>
+    </v-container>
   </div>
 </template>
 

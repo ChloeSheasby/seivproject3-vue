@@ -1,31 +1,55 @@
 <template>
   <div>
-    <h3 class='name-tag'>Student List</h3>    
-  <div>
-    <table class='center transparent-background' width='100%'>
-      <tr>
-        <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
-        <td style='text-align: center;'><router-link to="/studentAdd">Add Student</router-link></td>
-        <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
-      </tr>
-    </table>
-  </div>
-    <br>
-        <table width='100%'>
-          <thead>
-            <tr>
-              <th width='20%'>
-                  ID
-              </th>
-              <th width='40%'>
-                  Student Name
-              </th>
-              <th width='10%'></th>
-              <th width='10%'></th>
-            </tr>
-          </thead>
-        </table>
-        <StudentDisplay v-for="student in students" :key="student.studentID" :student="student" @delete-student=deleteStudent />
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Students</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn
+        class="no-text-transform"
+          color="success"
+          elevation="2"
+          @click="viewAllSC"
+          v-if="this.$store.state.loginUser.role === 'admin'"
+        >
+          Courses
+      </v-btn>
+      </v-toolbar>
+      <br><br>
+      <v-card>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <v-btn
+          color="accent"
+          elevation="2"
+          @click="addStudent"
+          v-if="this.$store.state.loginUser.role === 'admin'"
+        >
+          Add
+      </v-btn>
+
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :search="search"
+          :items="students"
+          :items-per-page="50"
+          @click:row="rowClick"
+        ></v-data-table>
+      </v-card>
+    </v-container>
   </div>
 </template>
 
@@ -34,27 +58,26 @@
 </style>
 
 <script>
-  import StudentDisplay from '@/components/StudentDisplay.vue'
   import StudentServices from '@/services/studentServices.js'
-  //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      StudentDisplay
     },
     data() {
       return {
+        search: '',
         students: [],
-        start: 1,
-        length: 100
+        headers: [{text: 'ID', value: 'studentID'}, 
+                  {text: 'Last Name', value: 'lName'},
+                  {text: 'First Name', value: 'fName'}]
       }
     },
     created() {
-      this.getStudents(this.start, this.length);
+      this.getStudents();
     },
     methods: {
-      getStudents(start, length) {
-        StudentServices.getStudents(start, length)
+      getStudents() {
+        StudentServices.getAllStudents()
         .then(response => {
           this.students = response.data;
         })
@@ -85,6 +108,19 @@
           this.start += this.length;
           this.getStudents(this.start, this.length);
         }
+      },
+      rowClick: function (item, row) {      
+        row.select(true);
+        this.$router.push({ name: 'studentView', params: { id: item.studentID } });
+      },
+      addStudent() {
+        this.$router.push({ name: 'studentAdd'});
+      },
+      viewAllSC() {
+        this.$router.push({ name: 'studentCourseList'});
+      },
+      cancel() {
+        this.$router.go(-1);
       }
     }
   }

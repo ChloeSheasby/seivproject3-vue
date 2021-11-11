@@ -1,59 +1,80 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class="name-tag">Editing {{ this.student.studentName }}</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>{{ this.student.fName }} {{ this.student.lName }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
 
-    <form @submit.prevent="updateStudent">
+      <v-form
+        ref="form" 
+        v-model="valid"
+        lazy validation
+      >
+        <v-container>
+          <v-text-field
+            v-model="student.fName"
+            id="fName"
+            :counter="25"
+            label="First Name"
+            required
+          ></v-text-field>
 
-      <div class="text-input-group">
-              <div class='input-label'>Degree ID</div>
-              <input
-                class="text-input"
-                v-model="student.degreeID"
-                type="text"
-                id="degreeID"
-                placeholder="Degree ID"
-              />
-              <br>
-              <div class='input-label'>Advisor ID</div>
-              <input
-                class="text-input"
-                v-model="student.advisorID"
-                type="text"
-                id="advisorID"
-                placeholder="Advisor ID"
-              />
-              <br>
-              <div class='input-label'>First Name</div>
-              <input
-                class="text-input"
-                v-model="student.fName"
-                type="text"
-                id="fName"
-                placeholder="First Name"
-              />
-              <br>
-              <div class='input-label'>Last Name</div>
-              <input
-                class="text-input"
-                v-model="student.lName"
-                type="text"
-                id="lName"
-                placeholder="Last Name"
-              />
-              <br>
-              <div class='input-label'>Email</div>
-              <input
-                class="text-input"
-                v-model="student.email"
-                type="text"
-                id="email"
-                placeholder="Email"
-              />
-      </div>
-      <input type="submit" name="submit" value="Save" />
-      <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
-    </form>
+          <v-text-field
+            v-model="student.lName"
+            id="lName"
+            :counter="25"
+            label="Last Name"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="student.email"
+            id="email"
+            label="Email"
+            required
+          ></v-text-field>
+
+          <v-select
+            v-model="student.degreeID"
+            :items="degrees"
+            item-text="degreeName"
+            item-value="degreeID"
+            label="Degree"
+            required
+          >
+          </v-select>
+
+          <v-select
+            v-if="this.$store.state.loginUser.role !== 'student'"
+            v-model="student.advisorID"
+            :items="advisors"
+            :item-text="item => item.fName +' '+ item.lName"
+            item-value="advisorID"
+            label="Advisor"
+            required
+          >
+          </v-select>
+
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="updateStudent"
+          >
+            Save
+          </v-btn>
+
+          <v-btn
+            color="error"
+            class="mr-4"
+            @click="cancel"
+          >
+            Cancel
+          </v-btn>
+        </v-container>
+      </v-form> 
+    </v-container>
   </div>
 </template>
 <style>
@@ -62,6 +83,8 @@
 
 <script>
 import StudentServices from "@/services/studentServices.js";
+import DegreeServices from "@/services/degreeServices.js";
+import AdvisorServices from "@/services/advisorServices.js";
 
 export default {
   props: ["id"],
@@ -69,10 +92,14 @@ export default {
   data() {
     return {
       student: {},
+      degrees: [],
+      advisors: [],
       message: "Make updates to the Student",
     };
   },
   created() {
+    this.getAllDegrees();
+    this.getAllAdvisors();
     StudentServices.getStudent(this.id)
       .then((response) => {
         this.student = response.data;
@@ -84,6 +111,24 @@ export default {
   },
 
   methods: {
+    getAllDegrees() {
+      DegreeServices.getAllDegrees()
+        .then((response) => {
+          this.degrees = response.data;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
+    getAllAdvisors() {
+      AdvisorServices.getAllAdvisors()
+        .then((response) => {
+          this.advisors = response.data;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
     updateStudent() {
       StudentServices.updateStudent(this.id, this.student)
         .then(() => {

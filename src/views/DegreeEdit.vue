@@ -1,41 +1,56 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class="name-tag">Editing {{ this.degree.degreeName }}</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>{{ this.degree.degreeName }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
 
-    <form @submit.prevent="updateDegree">
+      <v-form
+        ref="form" 
+        v-model="valid"
+        lazy validation
+      >
+        <v-text-field
+          v-model="degree.degreeName"
+          id="degreeName"
+          label="Degree Name"
+          required
+        ></v-text-field>
 
-      <div class="text-input-group">
-              <div class='input-label'>Degree Name</div>
-              <input
-                class="text-input"
-                v-model="degree.degreeName"
-                type="text"
-                id="degreeName"
-                placeholder="Degree Name"
-              />
-              <br>
-              <div class='input-label'>Department Name</div>
-              <input
-                class="text-input"
-                v-model="degree.dept"
-                type="text"
-                id="dept"
-                placeholder="Department Name"
-              />
-              <br>
-              <div class='input-label'>Total Hours</div>
-              <input
-                class="text-input"
-                v-model="degree.totalHours"
-                type="text"
-                id="totalHours"
-                placeholder="Total Hours"
-              />
-      </div>
-      <input type="submit" name="submit" value="Save" />
-      <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
-    </form>
+        <v-text-field
+          v-model="degree.dept"
+          id="dept"
+          :counter="4"
+          label="Department"
+          required
+        ></v-text-field>
+
+        <v-text-field
+          v-model="degree.totalHours"
+          id="totalHours"
+          label="Total Hours"
+          required
+        ></v-text-field>
+
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="updateDegree"
+        >
+          Save
+        </v-btn>
+
+        <v-btn
+          color="error"
+          class="mr-4"
+          @click="cancel"
+        >
+          Cancel
+        </v-btn>
+      </v-form>   
+    </v-container>
   </div>
 </template>
 <style>

@@ -1,42 +1,44 @@
 <template>
   <div>
-    <h3 class='name-tag'>Student Course List</h3>    
-  <div>
-    <table class='center transparent-background' width='100%'>
-      <tr>
-        <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
-        <td style='text-align: center;'><router-link to="/studentCourseAdd">Add Student Course</router-link></td>
-        <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
-      </tr>
-    </table>
-  </div>
-    <br>
-        <table width='100%'>
-          <thead>
-            <tr>
-              <th width='5%'>
-                  ID
-              </th>
-              <th width='10%'>
-                  Student Name
-              </th>
-              <th width='10%'>
-                  Semester
-              </th>
-              <th width='10%'>
-                  Course
-              </th>
-              <th width='5%'>
-                  Grade
-              </th>
-              <th width='5%'>
-                  Status
-              </th>
-              <th width='15%'></th>
-            </tr>
-          </thead>
-        </table>
-        <StudentCoursesDisplay v-for="student_courses in student_courses" :key="student_courses.studentCourseID" :student_courses="student_courses" @delete-student_courses=deleteStudentCourse />
+    <v-container>
+    <v-toolbar>
+        <v-toolbar-title>Student Courses</v-toolbar-title>
+      </v-toolbar>
+      <br><br>
+      <v-card>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+          <v-spacer></v-spacer>
+        <v-btn
+        color="accent"
+        elevation="2"
+        @click="addStudentCourse"
+      >
+        Add
+    </v-btn>
+
+    <v-btn
+        class="mr-4"
+        @click="cancel"
+      >
+        Back
+    </v-btn>
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :search="search"
+        :items="student_courses"
+        :items-per-page="50"
+        @click:row="rowClick"
+      ></v-data-table>
+    </v-card>  
+    </v-container>
   </div>
 </template>
 
@@ -45,29 +47,33 @@
 </style>
 
 <script>
-  import StudentCoursesDisplay from '@/components/StudentCoursesDisplay.vue'
   import StudentCourseServices from '@/services/studentCourseServices.js'
-  //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      StudentCoursesDisplay
     },
     data() {
       return {
+        search: '',
         student_courses: [],
-        start: 1,
-        length: 100,
+        headers: [{text: 'ID', value: 'studentCourseID'}, 
+                  {text: 'Last Name', value: 'lName'},
+                  {text: 'First Name', value: 'fName'},
+                  {text: 'Course', value: 'courseName'},
+                  {text: 'Semester', value: 'semesterName'},
+                  {text: 'Grade', value: 'grade'},
+                  {text: 'Status', value: 'status'}]
       }
     },
     created() {
-      this.getStudentCourses(this.start, this.length);
+      this.getStudentCourses();
     },
     methods: {
-      getStudentCourses(start, length) {
-        StudentCourseServices.getStudentCourses(start, length)
+      getStudentCourses() {
+        StudentCourseServices.getAllStudentCourses()
         .then(response => {
           this.student_courses = response.data;
+          console.log(this.student_courses)
         })
         .catch(error => {
           console.log("There was an error:", error.response)
@@ -96,6 +102,16 @@
           this.start += this.length;
           this.getStudentCourses(this.start, this.length);
         }
+      },
+      rowClick: function (item, row) {      
+        row.select(true);
+        this.$router.push({ name: 'studentCourseView', params: { id: item.studentCourseID } });
+      },
+      addStudentCourse() {
+        this.$router.push({ name: 'studentCourseAdd'});
+      },
+      cancel() {
+        this.$router.go(-1);
       }
     }
   }

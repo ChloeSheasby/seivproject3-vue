@@ -6,6 +6,9 @@ export default {
     getAllStudentCourses() {
       return apiClient.get("student_courses");
     },
+    getAllForStudent(id) {
+      return apiClient.get("student_courses/student/" + id);
+    },
     getStudentCourses(start, length) {
       return apiClient.get(`student_courses?start=${start}&length=${length}`);
     },

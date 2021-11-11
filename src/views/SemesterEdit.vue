@@ -1,51 +1,98 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class="name-tag">Editing {{ this.semester.name }}</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>{{ this.semester.semesterName }}</v-toolbar-title>
+      </v-toolbar>
 
-    <form @submit.prevent="updateSemester">
+      <v-form
+        ref="form" 
+        v-model="valid"
+        lazy validation
+      >
+        <v-text-field
+          v-model="semester.semesterName"
+          id="semesterName"
+          label="Semester Name"
+          required
+        ></v-text-field>
 
-      <div class="text-input-group">
-              <div class='input-label'>Semester Name</div>
-              <input
-                class="text-input"
-                v-model="semester.semesterName"
-                type="text"
-                id="semesterName"
-                placeholder="Semester Name"
-              />
-              <br>
-              <div class='input-label'>Semester Type</div>
-              <input
-                class="text-input"
-                v-model="semester.semesterType"
-                type="text"
-                id="semesterType"
-                placeholder="Semester Type"
-              />
-              <br>
-              <div class='input-label'>Start Date</div>
-              <input
-                class="text-input"
-                v-model="semester.startDate"
-                type="text"
-                id="startDate"
-                placeholder="Start Date"
-              />
-              <br>
-              <div class='input-label'>End Date</div>
-              <input
-                class="text-input"
-                v-model="semester.endDate"
-                type="text"
-                id="endDate"
-                placeholder="End Date"
-              />
-              <br>
-      </div>
-      <input type="submit" name="submit" value="Save" />
-      <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
-    </form>
+        <v-text-field
+          v-model="semester.semesterType"
+          id="semesterType"
+          label="Semester Type"
+          :counter="2"
+          required
+        ></v-text-field>
+
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="semester.startDate"
+              id="startDate"
+              label="Start Date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="semester.startDate"
+            @input="menu2 = false"
+          ></v-date-picker>
+        </v-menu>
+
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="semester.endDate"
+              id="endDate"
+              label="End Date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="semester.endDate"
+            @input="menu2 = false"
+          ></v-date-picker>
+        </v-menu>
+
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="updateSemester"
+        >
+          Save
+        </v-btn>
+
+        <v-btn
+          color="error"
+          class="mr-4"
+          @click="cancel"
+        >
+          Cancel
+        </v-btn>
+      </v-form> 
+    </v-container>
   </div>
 </template>
 <style>

@@ -1,54 +1,103 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class='name-tag'>Add Semester</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Add Semester</v-toolbar-title>
+      </v-toolbar>
+      <br>
 
-    <form @submit.prevent="addSemester">
-      
-      <div class="text-input-group">
-              <input
-                class="text-input"
-                v-model="semester.semesterName"
-                type="text"
-                id="semesterName"
-                placeholder="Semester Name"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="semester.semesterType"
-                type="text"
-                id="semesterType"
-                placeholder="Semester Type"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="semester.startDate"
-                type="text"
-                id="startDate"
-                placeholder="Start Date"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="semester.endDate"
-                type="text"
-                id="endDate"
-                placeholder="End Date"
-              />
-              <br>
-      </div>
-      
-            <div class="text-input-group">
-              <table class='center transparent-background' width='100%'>
-                <tr>
-                  <td style='text-align: right;'><button name="cancel" v-on:click.prevent="cancel()">Cancel</button></td>
-                  <td style='text-align: left;'><input type="submit" name="submit" value="Save"></td>
-                </tr>
-              </table>
-            </div>
-    </form>
+      <v-form
+        ref="form" 
+        v-model="valid"
+        lazy validation
+      >
+        <v-text-field
+          v-model="semester.semesterName"
+          id="semesterName"
+          label="Semester Name"
+          hint="Fall 2018"
+          persistent-hint
+          required
+        ></v-text-field>
+
+        <v-text-field
+          v-model="semester.semesterType"
+          id="semesterType"
+          label="Semester Type"
+          hint="Fa"
+          persistent-hint
+          :counter="2"
+          required
+        ></v-text-field>
+
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="semester.startDate"
+              id="startDate"
+              label="Start Date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="semester.startDate"
+            @input="menu2 = false"
+          ></v-date-picker>
+        </v-menu>
+
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="semester.endDate"
+              id="endDate"
+              label="End Date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="semester.endDate"
+            @input="menu2 = false"
+          ></v-date-picker>
+        </v-menu>
+
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="addSemester"
+        >
+          Save
+        </v-btn>
+
+        <v-btn
+          color="error"
+          class="mr-4"
+          @click="cancel"
+        >
+          Cancel
+        </v-btn>
+      </v-form> 
+    </v-container>
   </div>
 </template>
 <style>

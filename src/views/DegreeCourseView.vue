@@ -1,28 +1,51 @@
 <template>
   <div style="">
-    <h3 class="name-tag">Viewing Degree Course{{ this.degree_courses.degreeCourseID }}</h3>
-    <div style="margin-left: 32%; text-align: left">
-      <div style="padding-left: 8%">
-        <button name="back" v-on:click.prevent="cancel()">Back</button>
-        <span> &nbsp; </span>
-        <button name="edit" v-on:click.prevent="toEdit()">Edit</button>
-        <span> &nbsp; </span>
-        <button
-          name="delete"
-          v-on:click.prevent="
-            deleteDegreeCourse(
-              degree_courses.degreeCourseID,
-              degree_courses.degreeCourseID
-            )
-          "
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Degree Course {{ this.degree_courses.degreeCourseID }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+        <v-btn
+          color="accent"
+          elevation="2"
+          @click="toEdit"
+          v-if="this.$store.state.loginUser.role === 'admin'"
+        >
+          Edit
+      </v-btn>
+
+      <v-btn
+          color="error"
+          class="mr-4"
+          @click="deleteDegreeCourse(degree_courses.degreeCourseID,degree_courses.degreeCourseID)"
+          v-if="this.$store.state.loginUser.role === 'admin'"
         >
           Delete
-        </button>
-      </div>
-      <br />
-      <div class="text-input">Degree: {{ this.degree.degreeName }}</div>
-      <div class="text-input">Course: {{ this.course.courseName }}</div>
-    </div>
+      </v-btn>
+
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+
+      <br><br>
+
+      <v-text-field
+          v-model="this.degree.degreeName"
+          id="degreeName"
+          label="Degree"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="this.course.courseName"
+          id="courseName"
+          label="Course"
+          readonly
+        ></v-text-field>
+    </v-container>
   </div>
 </template>
 

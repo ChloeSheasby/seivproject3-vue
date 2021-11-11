@@ -36,7 +36,10 @@ export default {
             Utils.setStore("user", user)
             console.log(this.$store.state.loginUser)
             //this.$store.commit('setLoginUser', userInfo)
-            router.push('/home')
+            if (this.$store.state.loginUser.role === 'admin' || this.$store.state.loginUser.role === 'advisor')
+              router.push('/advisorHome')
+            else if (this.$store.state.loginUser.rol === 'student')
+              router.push('/studentHome')
           })
           
         })

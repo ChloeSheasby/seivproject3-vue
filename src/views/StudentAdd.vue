@@ -1,76 +1,127 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class='name-tag'>Add Student</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Add Student</v-toolbar-title>
+      </v-toolbar>
+      <br>
 
-    <form @submit.prevent="addStudent">
-      
-      <div class="text-input-group">
-              <input
-                class="text-input"
-                v-model="student.degreeID"
-                type="text"
-                id="degreeID"
-                placeholder="Degree ID"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="student.advisorID"
-                type="text"
-                id="advisorID"
-                placeholder="Advisor ID"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="student.fName"
-                type="text"
-                id="fName"
-                placeholder="First Name"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="student.lName"
-                type="text"
-                id="lName"
-                placeholder="Last Name"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="student.email"
-                type="text"
-                id="email"
-                placeholder="Email"
-              />
-      </div>
-      
-            <div class="text-input-group">
-              <table class='center transparent-background' width='100%'>
-                <tr>
-                  <td style='text-align: right;'><button name="cancel" v-on:click.prevent="cancel()">Cancel</button></td>
-                  <td style='text-align: left;'><input type="submit" name="submit" value="Save"></td>
-                </tr>
-              </table>
-            </div>
-    </form>
+      <v-form
+        ref="form" 
+        v-model="valid"
+        lazy validation
+      >
+        <v-container>
+          <v-text-field
+            v-model="student.fName"
+            id="fName"
+            :counter="25"
+            label="First Name"
+            hint="Sue"
+            persistent-hint
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="student.lName"
+            id="lName"
+            :counter="25"
+            label="Last Name"
+            hint="Roberts"
+            persistent-hint
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="student.email"
+            id="email"
+            label="Email"
+            hint="sue.roberts@eagles.oc.edu"
+            persistent-hint
+            required
+          ></v-text-field>
+
+          <v-select
+            v-model="student.degreeID"
+            :items="degrees"
+            item-text="degreeName"
+            item-value="degreeID"
+            label="Degree"
+            required
+          >
+          </v-select>
+
+          <v-select
+            v-model="student.advisorID"
+            :items="advisors"
+            :item-text="item => item.fName +' '+ item.lName"
+            item-value="advisorID"
+            label="Advisor"
+            required
+          >
+          </v-select>
+
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="addStudent"
+          >
+            Save
+          </v-btn>
+
+          <v-btn
+            color="error"
+            class="mr-4"
+            @click="cancel"
+          >
+            Cancel
+          </v-btn>
+        </v-container>
+      </v-form> 
+    </v-container>
   </div>
 </template>
 <style>
-@import "../assets/styles/basic.css";
+/* @import "../assets/styles/basic.css"; */
 </style>
 
 <script>
 import StudentServices from "@/services/studentServices.js";
+import DegreeServices from "@/services/degreeServices.js";
+import AdvisorServices from "@/services/advisorServices.js";
+
 export default {
   data() {
     return {
       student: {},
+      degrees: [],
+      advisors: []
     };
   },
+  created() {
+    this.getAllDegrees()
+    this.getAllAdvisors()
+  },
   methods: {
+    getAllDegrees() {
+      DegreeServices.getAllDegrees()
+        .then((response) => {
+          this.degrees = response.data;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
+    getAllAdvisors() {
+      AdvisorServices.getAllAdvisors()
+        .then((response) => {
+          this.advisors = response.data;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
     addStudent() {
       StudentServices.addStudent(this.student)
         .then(() => {

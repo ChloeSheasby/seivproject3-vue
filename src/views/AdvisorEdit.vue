@@ -1,60 +1,70 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class="name-tag">Editing {{ this.advisor.fName }} {{ this.advisor.lName }}</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>{{ this.advisor.fName }} {{ this.advisor.lName }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+    <v-form
+      ref="form" 
+      v-model="valid"
+      lazy validation
+    >
+      <v-text-field
+        v-model="advisor.fName"
+        id="fName"
+        :counter="25"
+        label="First Name"
+        required
+      ></v-text-field>
 
-    <form @submit.prevent="updateAdvisor">
+      <v-text-field
+        v-model="advisor.lName"
+        id="lName"
+        :counter="25"
+        label="Last Name"
+        required
+      ></v-text-field>
 
-      <div class="text-input-group">
-              <div class='input-label'>First Name</div>
-              <input
-                class="text-input"
-                v-model="advisor.fName"
-                type="text"
-                id="fName"
-                placeholder="First Name"
-              />
-              <br>
-              <div class='input-label'>Last Name</div>
-              <input
-                class="text-input"
-                v-model="advisor.lName"
-                type="text"
-                id="lName"
-                placeholder="Last Name"
-              />
-              <br>
-              <div class='input-label'>Email</div>
-              <input
-                class="text-input"
-                v-model="advisor.email"
-                type="text"
-                id="email"
-                placeholder="Email"
-              />
-              <br>
-              <div class='input-label'>Department Name</div>
-              <input
-                class="text-input"
-                v-model="advisor.dept"
-                type="text"
-                id="dept"
-                placeholder="Department Name"
-              />
-              <br>
-              <div class='input-label'>Role</div>
-              <input
-                class="text-input"
-                v-model="advisor.role"
-                type="text"
-                id="role"
-                placeholder="Role"
-              />
-              <br>
-      </div>
-      <input type="submit" name="submit" value="Save" />
-      <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
-    </form>
+      <v-text-field
+        v-model="advisor.email"
+        label="Email"
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="advisor.dept"
+        :counter="4"
+        label="Department"
+        required
+      ></v-text-field>
+
+      <v-select
+        v-if="this.$store.state.loginUser.role === 'admin'"
+        v-model="advisor.role"
+        :items="roles"
+        label="Role"
+        required
+      ></v-select>
+
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="updateAdvisor"
+      >
+        Save
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        @click="cancel"
+      >
+        Cancel
+      </v-btn>
+    </v-form>
+    </v-container>
   </div>
 </template>
 <style>
@@ -71,6 +81,10 @@ export default {
     return {
       advisor: {},
       message: "Make updates to the Advisor",
+            roles: [
+        'admin',
+        'advisor'
+      ],
     };
   },
   created() {

@@ -1,5 +1,5 @@
 <template>
-  <div style="">
+  <div>
     <v-container>
       <v-toolbar>
         <v-toolbar-title>{{ this.student.fName }} {{ this.student.lName }}</v-toolbar-title>
@@ -123,6 +123,8 @@ export default {
       student: {},
       advisor: {},
       degree: {},
+      semesterCourses: [],
+      uniqueSemesters: [],
       student_courses: [],
       courses: [],
       scTemp: {},
@@ -156,6 +158,8 @@ export default {
       StudentCourseServices.getAllForStudent(this.id)
       .then(response => {
         this.student_courses = response.data;
+        this.getSemesterCourses();
+        console.log(this.uniqueSemesters)
       })
       .catch(error => {
         console.log("There was an error:", error.response)
@@ -179,6 +183,10 @@ export default {
         .catch((error) => {
           console.log("There was an error:", error.response);
         });
+    },
+    getSemesterCourses() {
+      this.student_courses.forEach(course => this.semesterCourses.push(course.semesterName))
+      this.uniqueSemesters = this.semesterCourses.filter((c, index) => {return this.semesterCourses.indexOf(c) === index;});
     },
     deleteStudent(id, fName) {
       let confirmed = confirm(`Are you sure you want to delete ${fName}`);

@@ -12,6 +12,7 @@
     >
 
       <v-select
+        v-if="this.$store.state.loginUser.role !== 'student'"
         v-model="student_courses.studentID"
         :items="students"
         :item-text="item => item.fName +' '+ item.lName"
@@ -20,6 +21,14 @@
         required
       >
       </v-select>
+
+      <v-text-field
+        v-else
+        v-model="studentName"
+        id="student_courses.studentID"
+        label="First Name"
+        readonly
+      ></v-text-field>
 
       <v-select
         v-model="student_courses.courseID"
@@ -98,16 +107,36 @@ export default {
       courses: {},
       students: {},
       semesters: {},
+      student: {},
       grades: ['', 'A', 'B', 'C', 'D', 'F'],
       states: ['Completed', 'In-Progress', 'Upcoming'],
     };
+  },
+  computed: {
+    studentName: {
+      get() {
+        return `${this.student.fName} ${this.student.lName}`;
+      }
+    }
   },
   created() {
     this.getAllCourses();
     this.getAllStudents();
     this.getAllSemesters();
+    if(this.$store.state.loginUser.role === 'student')
+      this.getStudent();
   },
   methods: {
+    getStudent() {
+      StudentServices.getStudent(this.$store.state.loginUser.studentID)
+        .then((response) => {
+          this.student = response.data;
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });  
+    },
     getAllCourses() {
       CourseServices.getAllCourses()
         .then((response) => {

@@ -1,45 +1,62 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class='name-tag'>Add Degree</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Add Degree</v-toolbar-title>
+      </v-toolbar>
+      <br>
 
-    <form @submit.prevent="addDegree">
-      
-      <div class="text-input-group">
-              <input
-                class="text-input"
-                v-model="degree.degreeName"
-                type="text"
-                id="degreeName"
-                placeholder="Degree Name"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="degree.dept"
-                type="text"
-                id="dept"
-                placeholder="Department"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="degree.totalHours"
-                type="text"
-                id="totalHours"
-                placeholder="Total Hours"
-              />
-      </div>
-      
-            <div class="text-input-group">
-              <table class='center transparent-background' width='100%'>
-                <tr>
-                  <td style='text-align: right;'><button name="cancel" v-on:click.prevent="cancel()">Cancel</button></td>
-                  <td style='text-align: left;'><input type="submit" name="submit" value="Save"></td>
-                </tr>
-              </table>
-            </div>
-    </form>
+    <v-form
+      ref="form" 
+      v-model="valid"
+      lazy validation
+    >
+      <v-text-field
+        v-model="degree.degreeName"
+        id="degreeName"
+        label="Degree Name"
+        hint="Computer Science"
+        persistent-hint
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="degree.dept"
+        id="dept"
+        :counter="4"
+        label="Department"
+        hint="CMSC"
+        persistent-hint
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="degree.totalHours"
+        id="totalHours"
+        label="Total Hours"
+        hint="120"
+        persistent-hint
+        required
+      ></v-text-field>
+
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="addDegree"
+      >
+        Save
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        @click="cancel"
+      >
+        Cancel
+      </v-btn>
+    </v-form>  
+    </v-container>  
   </div>
 </template>
 <style>

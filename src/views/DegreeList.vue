@@ -1,31 +1,58 @@
 <template>
   <div>
-    <h3 class='name-tag'>Degree List</h3>    
-  <div>
-    <table class='center transparent-background' width='100%'>
-      <tr>
-        <td style='padding-left: 25%; text-align: left;'><button class='arrows' name="previous" v-on:click.prevent="getPrevious()">&#60;</button></td>
-        <td style='text-align: center;'><router-link to="/degreeAdd">Add Degree</router-link></td>
-        <td style='padding-right: 25%; text-align: right;'><button class='arrows' name="next" v-on:click.prevent="getNext()">&#62;</button></td>
-      </tr>
-    </table>
-  </div>
-    <br>
-        <table width='100%'>
-          <thead>
-            <tr>
-              <th width='20%'>
-                  ID
-              </th>
-              <th width='40%'>
-                  Degree Name
-              </th>
-              <th width='10%'></th>
-              <th width='10%'></th>
-            </tr>
-          </thead>
-        </table>
-        <DegreeDisplay v-for="degree in degrees" :key="degree.degreeID" :degree="degree" @delete-degree=deleteDegree />
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Degrees</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <div class="text-center">
+        <v-btn
+          v-if="this.$store.state.loginUser.role === 'admin'"
+        class="no-text-transform"
+          color="success"
+          elevation="2"
+          @click="viewAllDC"
+        >
+          Courses
+      </v-btn>
+        </div>
+      </v-toolbar>
+      <br><br>
+      <v-card>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+          <v-spacer></v-spacer>
+
+          <v-btn
+          color="accent"
+          elevation="2"
+          @click="addDegree"
+          v-if="this.$store.state.loginUser.role === 'admin'"
+        >
+          Add
+      </v-btn>
+
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :search="search"
+          :items="degrees"
+          :items-per-page="50"
+          @click:row="rowClick"
+        ></v-data-table>
+      </v-card> 
+    </v-container>   
   </div>
 </template>
 
@@ -34,27 +61,25 @@
 </style>
 
 <script>
-  import DegreeDisplay from '@/components/DegreeDisplay.vue'
   import DegreeServices from '@/services/degreeServices.js'
-  //import UserDisplay from '@/components/UserDisplay.vue'
   export default {
     name: 'App',
     components: {
-      DegreeDisplay
     },
     data() {
       return {
+        search: '',
         degrees: [],
-        start: 1,
-        length: 100
+        headers: [{text: 'ID', value: 'degreeID'}, 
+                  {text: 'Degree Name', value: 'degreeName'}]
       }
     },
     created() {
-      this.getDegrees(this.start, this.length);
+      this.getDegrees();
     },
     methods: {
-      getDegrees(start, length) {
-        DegreeServices.getDegrees(start, length)
+      getDegrees() {
+        DegreeServices.getAllDegrees()
         .then(response => {
           this.degrees = response.data;
         })
@@ -85,6 +110,19 @@
           this.start += this.length;
           this.getDegrees(this.start, this.length);
         }
+      },
+      rowClick: function (item, row) {      
+        row.select(true);
+        this.$router.push({ name: 'degreeView', params: { id: item.degreeID } });
+      },
+      addDegree() {
+        this.$router.push({ name: 'degreeAdd'});
+      },
+      viewAllDC() {
+        this.$router.push({ name: 'degreeCourseList'});
+      },
+      cancel() {
+        this.$router.go(-1);
       }
     }
   }

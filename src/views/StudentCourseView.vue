@@ -1,31 +1,78 @@
 <template>
   <div style="">
-    <h3 class="name-tag">Viewing Student Course{{ this.student_courses.studentCourseID }}</h3>
-    <div style="margin-left: 32%; text-align: left">
-      <div style="padding-left: 8%">
-        <button name="back" v-on:click.prevent="cancel()">Back</button>
-        <span> &nbsp; </span>
-        <button name="edit" v-on:click.prevent="toEdit()">Edit</button>
-        <span> &nbsp; </span>
-        <button
-          name="delete"
-          v-on:click.prevent="
-            deleteStudentCourse(
-              student_courses.studentCourseID,
-              student_courses.studentCourseID
-            )
-          "
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Student Course {{ this.student_courses.studentCourseID }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+        <v-btn
+          color="accent"
+          elevation="2"
+          @click="toEdit"
+        >
+          Edit
+      </v-btn>
+
+      <v-btn
+          color="error"
+          class="mr-4"
+          @click="deleteStudentCourse(student_courses.studentCourseID,student_courses.studentCourseID)"
         >
           Delete
-        </button>
-      </div>
-      <br />
-      <div class="text-input">Student: {{ this.student.fName }} {{ this.student.lName }}</div>
-      <div class="text-input">Course: {{ this.course.courseName }}</div>
-      <div class="text-input">Semester: {{ this.semester.semesterName }}</div>
-      <div class="text-input">Grade: {{ student_courses.grade }}</div>
-      <div class="text-input">Status: {{ student_courses.status }}</div>
-    </div>
+      </v-btn>
+
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+
+      <br><br>
+
+      <v-text-field
+          v-model="this.student.fName"
+          id="fName"
+          label="First Name"
+          readonly
+        ></v-text-field>
+
+      <v-text-field
+          v-model="this.student.lName"
+          id="lName"
+          label="Last Name"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="this.course.courseName"
+          id="courseName"
+          label="Course"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="this.semester.semesterName"
+          id="semesterName"
+          label="Semester"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="this.student_courses.grade"
+          id="grade"
+          label="Grade"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="this.student_courses.status"
+          id="status"
+          label="Status"
+          readonly
+        ></v-text-field>
+
+    </v-container>
   </div>
 </template>
 

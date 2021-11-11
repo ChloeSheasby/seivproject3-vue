@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import AdvisorList from './views/AdvisorList.vue';
 import AdvisorEdit from './views/AdvisorEdit.vue';
 import AdvisorAdd from './views/AdvisorAdd.vue';
 import AdvisorView from './views/AdvisorView.vue';
 import AdvisorHome from './views/AdvisorHome.vue';
+import AdvisorStudents from './views/AdvisorStudents.vue';
 import CourseList from "./views/CourseList.vue";
-import CourseSearch from "./views/CourseSearch.vue";
 import CourseAdd from "./views/CourseAdd.vue";
 import CourseEdit from "./views/CourseEdit.vue";
 import CourseView from "./views/CourseView.vue";
@@ -25,18 +24,16 @@ import SemesterList from "./views/SemesterList.vue";
 import SemesterEdit from "./views/SemesterEdit.vue";
 import SemesterView from "./views/SemesterView.vue";
 import SemesterAdd from "./views/SemesterAdd.vue";
-import StudentCourseListView from "./views/StudentCourseListView.vue";
 import DegreeCourseList from "./views/DegreeCourseList.vue";
 import DegreeCourseAdd from "./views/DegreeCourseAdd.vue";
 import DegreeCourseEdit from "./views/DegreeCourseEdit.vue";
 import DegreeCourseView from "./views/DegreeCourseView.vue";
-import DegreeCourseAddFromDegree from "./views/DegreeCourseAddFromDegree.vue";
 import StudentCourseList from "./views/StudentCourseList.vue";
 import StudentCourseAdd from "./views/StudentCourseAdd.vue";
 import StudentCourseEdit from "./views/StudentCourseEdit.vue";
 import StudentCourseView from "./views/StudentCourseView.vue";
 import StudentHome from "./views/StudentHome.vue";
-//import StudentCourseAddFromDegree from "./views/StudentCourseAddFromDegree.vue";
+import StudentPlan from "./views/StudentPlan.vue";
 
 Vue.use(Router)
 
@@ -50,11 +47,6 @@ const router =  new Router({
       path: '/login',
       name: 'login',
       component: Login
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: Home
     },
     {
       path: '/advisorList',
@@ -73,6 +65,12 @@ const router =  new Router({
       component: AdvisorAdd
     },
     {
+      path: '/advisorStudents/:id',
+      name: 'advisorStudents',
+      component: AdvisorStudents,
+      props: true
+    },
+    {
       path: '/advisorView/:id',
       name: 'advisorView',
       component: AdvisorView,
@@ -88,11 +86,6 @@ const router =  new Router({
       path: "/courseList/",
       name: "courseList",
       component: CourseList
-    },
-    {
-      path: "/courseSearch/",
-      name: "courseSearch",
-      component: CourseSearch
     },
     {
       path: "/courseAdd",
@@ -178,21 +171,9 @@ const router =  new Router({
       props: true
     },
     {
-      path: '/studentCourseListView/:id',
-      name: 'studentCourseListView',
-      component: StudentCourseListView,
-      props: true
-    },
-    {
       path: '/degreeCourseAdd',
       name: 'degreeCourseAdd',
       component: DegreeCourseAdd,
-      props: true
-    },
-    {
-      path: '/degreeCourseAddFromDegree',
-      name: 'degreeCourseAddFromDegree',
-      component: DegreeCourseAddFromDegree,
       props: true
     },
     {
@@ -219,14 +200,6 @@ const router =  new Router({
       component: StudentCourseAdd,
       props: true
     },
-    /*
-    {
-      path: '/studentCourseAddFromDegree',
-      name: 'studentCourseAddFromDegree',
-      component: StudentCourseAddFromDegree,
-      props: true
-    },
-    */
     {
       path: '/studentCourseList',
       name: 'studentCourseList',
@@ -248,6 +221,12 @@ const router =  new Router({
       path: '/studentHome/:id',
       name: 'studentHome',
       component: StudentHome,
+      props: true
+    },
+    {
+      path: '/studentPlan/:id',
+      name: 'studentPlan',
+      component: StudentPlan,
       props: true
     }
     /*

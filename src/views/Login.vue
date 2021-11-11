@@ -1,8 +1,11 @@
 <template>
-  <div class="main-container">
-    <h2 class="heading">Sign In</h2>
-    <SocialLogin />
-  </div>
+  <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Sign In</v-toolbar-title>
+      </v-toolbar>
+      <br><br>
+      <SocialLogin />
+  </v-container>
 </template>
 
 <script>

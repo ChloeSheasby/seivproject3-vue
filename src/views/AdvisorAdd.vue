@@ -1,62 +1,77 @@
 <template>
   <div>
-    <!--<UserDisplay></UserDisplay>-->
-    <h3 class='name-tag'>Add Advisor</h3>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>Add Advisor</v-toolbar-title>
+      </v-toolbar>
+      <br>
+    <v-form
+      ref="form" 
+      v-model="valid"
+      lazy validation
+    >
+      <v-text-field
+        v-model="advisor.fName"
+        id="fName"
+        :counter="25"
+        label="First Name"
+        hint="John"
+        persistent-hint
+        required
+      ></v-text-field>
 
-    <form @submit.prevent="addAdvisor">
-      
-      <div class="text-input-group">
-              <input
-                class="text-input"
-                v-model="advisor.fName"
-                type="text"
-                id="fName"
-                placeholder="First Name"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="advisor.lName"
-                type="text"
-                id="lName"
-                placeholder="Last Name"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="advisor.email"
-                type="text"
-                id="email"
-                placeholder="Email"
-              />
-              <br>
-              <input
-                class="text-input"
-                v-model="advisor.dept"
-                type="text"
-                id="dept"
-                placeholder="Department Name"
-              />
-              <br>
-              <div class="text-input-group">
-                <div class='input-label'>Role</div>
-                <select v-model="advisor.role">
-                  <option> admin </option>
-                  <option> advisor </option>
-                </select>
-              </div>
-              <br>
-      </div>
-      
-            <div class="text-input-group">
-              <table class='center transparent-background' width='100%'>
-                <tr>
-                  <td style='text-align: right;'><button name="cancel" v-on:click.prevent="cancel()">Cancel</button></td>
-                  <td style='text-align: left;'><input type="submit" name="submit" value="Save"></td>
-                </tr>
-              </table>
-            </div>
-    </form>
+      <v-text-field
+        v-model="advisor.lName"
+        id="lName"
+        :counter="25"
+        label="Last Name"
+        hint="Doe"
+        persistent-hint
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="advisor.email"
+        label="Email"
+        hint="john.doe@oc.edu"
+        persistent-hint
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="advisor.dept"
+        :counter="4"
+        label="Department"
+        hint="CMSC"
+        persistent-hint
+        required
+      ></v-text-field>
+
+      <v-select
+        v-model="advisor.role"
+        :items="roles"
+        label="Role"
+        required
+      ></v-select>
+
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="addAdvisor"
+      >
+        Save
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        @click="cancel"
+      >
+        Cancel
+      </v-btn>
+    </v-form>
+    </v-container>
   </div>
 </template>
 <style>
@@ -69,6 +84,10 @@ export default {
   data() {
     return {
       advisor: {},
+      roles: [
+        'admin',
+        'advisor'
+      ],
     };
   },
   methods: {
@@ -83,7 +102,7 @@ export default {
     },
     cancel() {
       this.$router.push({ name: "advisorList" });
-    },
+    }
   },
 };
 </script>

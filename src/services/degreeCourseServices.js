@@ -6,6 +6,9 @@ export default {
     getAllDegreeCourses() {
       return apiClient.get("degree_courses");
     },
+    getAllForDegree(id) {
+      return apiClient.get("degree_courses/degree/" + id);
+    },
     getDegreeCourses(start, length) {
       return apiClient.get(`degree_courses?start=${start}&length=${length}`);
     },

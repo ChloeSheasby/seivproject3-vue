@@ -1,23 +1,104 @@
 <template>
   <div style="">
-    <h3 class="name-tag">Viewing Semester {{ this.semester.semesterName }}</h3>
-    <div style="margin-left: 32%; text-align: left">
-      <div style='padding-left: 8%;'>
-        <button name="back" v-on:click.prevent="cancel()">Back</button>
-        <span> &nbsp; </span>
-        <button name="edit" v-on:click.prevent="toEdit()">Edit</button>
-        <span> &nbsp; </span>
-        <button
-          name="delete"
-          v-on:click.prevent="deleteSemester(semester.semesterID, semester.semesterName)">
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>{{ this.semester.semesterName }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+      <v-btn
+        color="accent"
+        elevation="2"
+        @click="toEdit"
+        v-if="this.$store.state.loginUser.role === 'admin'"
+      >
+        Edit
+      </v-btn>
+
+      <v-btn
+          color="error"
+          class="mr-4"
+          @click="deleteSemester(semester.semesterID, semester.semesterName)"
+          v-if="this.$store.state.loginUser.role === 'admin'"
+        >
           Delete
-        </button>
-      </div>
-      <br/>
-      <div class="text-input">Semester Type: {{ this.semester.semesterType }}</div>
-      <div class="text-input">Start Date: {{ this.semester.startDate }}</div>
-      <div class="text-input">Semester Level: {{ this.semester.endDate }}</div>
-    </div>
+      </v-btn>
+
+      <v-btn
+          class="mr-4"
+          @click="cancel"
+        >
+          Back
+      </v-btn>
+
+      <br><br>
+
+      <v-text-field
+          v-model="semester.semesterName"
+          id="semesterName"
+          label="Semester Name"
+          readonly
+        ></v-text-field>
+
+        <v-text-field
+          v-model="semester.semesterType"
+          id="semesterType"
+          label="Semester Type"
+          :counter="2"
+          readonly
+        ></v-text-field>
+
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+          disabled
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="semester.startDate"
+              id="startDate"
+              label="Start Date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="semester.startDate"
+            @input="menu2 = false"
+          ></v-date-picker>
+        </v-menu>
+
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+          disabled
+        >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="semester.endDate"
+            id="endDate"
+            label="End Date"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="semester.endDate"
+          @input="menu2 = false"
+        ></v-date-picker>
+      </v-menu>
+    </v-container>
   </div>
 </template>
 

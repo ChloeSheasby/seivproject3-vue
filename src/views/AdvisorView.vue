@@ -1,24 +1,73 @@
 <template>
   <div style="">
-    <h3 class="name-tag">Viewing Advisor {{ this.advisor.fName }} {{ this.advisor.lName }}</h3>
-    <div style="margin-left: 32%; text-align: left">
-      <div style='padding-left: 8%;'>
-        <button name="back" v-on:click.prevent="cancel()">Back</button>
-        <span> &nbsp; </span>
-        <button name="edit" v-on:click.prevent="toEdit()">Edit</button>
-        <span> &nbsp; </span>
-        <button
-          name="delete"
-          v-on:click.prevent="deleteAdvisor(advisor.advisorID, advisor.fName)">
-          Delete
-        </button>
-      </div>
-      <br />
-      <div class="text-input">Email: {{ this.advisor.email }}</div>
-      <div class="text-input">Role: {{ this.advisor.role }}</div>
-      <div class="text-input">Department: {{ this.advisor.dept }}</div>
-      </div>
-    </div>
+    <v-container>
+      <v-toolbar>
+        <v-toolbar-title>{{ this.advisor.fName }} {{ this.advisor.lName }}</v-toolbar-title>
+      </v-toolbar>
+      <br>
+      <v-btn
+        v-if="this.$store.state.loginUser.role === 'admin'"
+        color="accent"
+        elevation="2"
+        @click="toEdit"
+      >
+        Edit
+    </v-btn>
+
+    <v-btn
+        v-if="this.$store.state.loginUser.role === 'admin'"
+        color="error"
+        class="mr-4"
+        @click="deleteAdvisor(advisor.advisorID, advisor.fName)"
+      >
+        Delete
+    </v-btn>
+
+    <v-btn
+        class="mr-4"
+        @click="cancel"
+      >
+        Back
+    </v-btn>
+
+    <br><br>
+
+    <v-text-field
+        v-model="advisor.fName"
+        id="fName"
+        :counter="25"
+        label="First Name"
+        readonly
+      ></v-text-field>
+
+      <v-text-field
+        v-model="advisor.lName"
+        id="lName"
+        :counter="25"
+        label="Last Name"
+        readonly
+      ></v-text-field>
+
+      <v-text-field
+        v-model="advisor.email"
+        label="Email"
+        readonly
+      ></v-text-field>
+
+      <v-text-field
+        v-model="advisor.dept"
+        :counter="4"
+        label="Department"
+        readonly
+      ></v-text-field>
+
+       <v-text-field
+        v-model="advisor.role"
+        label="Role"
+        readonly
+      ></v-text-field>
+    </v-container>
+  </div>
 </template>
 
 <style>

@@ -140,7 +140,7 @@ export default {
       if (confirmed) {
         StudentCourseServices.deleteStudentCourse(id)
           .then(() => {
-            this.$router.push({ name: "studentCourseList" });
+            this.$router.go(-1);
           })
           .catch((error) => {
             console.log("There was an error:", error.response);

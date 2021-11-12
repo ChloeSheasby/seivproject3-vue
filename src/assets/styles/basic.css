@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: rgb(238, 238, 238);
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
@@ -157,7 +157,6 @@ thead > tr , th {
     border-radius: 1px solid #b3b3b3;
 }
 textarea { 
-    /* will prevent resizing horizontally */
     resize:vertical;
     height: 8em;
     width: 50em;
@@ -173,4 +172,4 @@ input, select {
     width: 300px;
     padding: 1px;
     border-radius: 5px;
-}
+} */
